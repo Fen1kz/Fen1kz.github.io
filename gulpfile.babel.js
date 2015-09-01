@@ -1,6 +1,5 @@
 import gulp from 'gulp';
 import ghPages from 'gulp-gh-pages';
-import gulpJade from 'gulp-jade';
 import gulpSequence from 'gulp-sequence';
 import gulpForeach from 'gulp-foreach';
 import frontMatter from 'gulp-front-matter';
@@ -39,7 +38,8 @@ gulp.task('content:template', () => {
         .pipe(frontMatter({
             property: 'metadata'
         }))
-        .pipe(myGulpTransform('TEST'))
+        .pipe(marked())
+        .pipe(myGulpTransform({}))
         .pipe(gulp.dest(dirs.dest));
 });
 

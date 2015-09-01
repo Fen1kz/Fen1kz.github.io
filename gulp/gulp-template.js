@@ -1,27 +1,44 @@
-import through from 'through2';
-import gutil   from 'gulp-util';
+let through = require('through2');
+let gutil = require('gulp-util');
+let jade = require('jade');
+let util = require('util');
+let fs = require("fs");
 
+let extend = util._extend;
+let ext = gutil.replaceExtension;
 let PluginError = gutil.PluginError;
+
 const PLUGIN_NAME = 'gulp-template';
 
-function gulpPrefixer(prefixText) {
-    if (!prefixText) {
-        throw new PluginError(PLUGIN_NAME, 'Missing prefix text!');
-    }
+function gulpPrefixer(options) {
+    let opts = extend({
+        pretty: true
+    }, options);
 
-    prefixText = new Buffer(prefixText); // allocate ahead of time
+    console.log('compiling template');
+    let template = fs.readFileSync('./src/theme/index.jade');
+    //console.log(file);
+    let compiledTemplate = jade.compile(template, opts);
 
-    // creating a stream through which each file will pass
-    var stream = through.obj(function(file, enc, cb) {
+    let compileJade = function (file, enc, cb) {
         if (file.isStream()) {
             this.emit('error', new PluginError(PLUGIN_NAME, 'Streams are not supported!'));
             return cb();
         }
 
         if (file.isBuffer()) {
-            console.log(Object.keys(file));
-            console.log(file.metadata);
-            file.contents = Buffer.concat([prefixText, file.contents]);
+            try {
+                let data = {
+                    file: {
+                        metadata: file.metadata
+                        , contents: String(file.contents)
+                    }
+                };
+                let compiledFile = compiledTemplate(data);
+                file.contents = new Buffer(compiledFile);
+            } catch (e) {
+                return cb(new PluginError('gulp-jade', e));
+            }
         }
 
         // make sure the file goes through the next gulp plugin
@@ -29,10 +46,10 @@ function gulpPrefixer(prefixText) {
 
         // tell the stream engine that we are done with this file
         cb();
-    });
+    };
 
     // returning the file stream
-    return stream;
+    return through.obj(compileJade);
 };
 
 
