@@ -2,12 +2,14 @@ import gulp from 'gulp';
 import ghPages from 'gulp-gh-pages';
 import gulpSequence from 'gulp-sequence';
 import gulpForeach from 'gulp-foreach';
+import gulpJade from 'gulp-jade';
+import gulpTap from 'gulp-tap';
 import frontMatter from 'gulp-front-matter';
 import marked from 'gulp-marked';
 
 import rimraf from 'rimraf';
 
-import myGulpTransform from './gulp/gulp-template';
+import insert2Template from './gulp/gulp-template';
 
 let dirs = {
     src: './src'
@@ -16,6 +18,7 @@ let dirs = {
 
 let globs = {
     src: dirs.src + '/**/*'
+    , index: dirs.src + '/index.*'
     , md: dirs.src + '/**/*.md'
     , txt: dirs.src + '/**/*.txt'
     , jade: dirs.src + '/theme/**/*.jade'
@@ -33,19 +36,45 @@ gulp.task('deploy', () => {
         }));
 });
 
-gulp.task('content:template', () => {
+gulp.task('content:md', () => {
     gulp.src(globs.md)
         .pipe(frontMatter({
             property: 'metadata'
         }))
+        .pipe(gulpTap((file, t) => {
+            file.data = {
+                file: {
+                    data: file.metadata
+                }
+            };
+        }))
         .pipe(marked())
-        .pipe(myGulpTransform({}))
+        .pipe(insert2Template({}))
         .pipe(gulp.dest(dirs.dest));
 });
 
-gulp.task('content:md', function () {
-    gulp.src(globs.md)
-        .pipe(marked()) // Do whatever you want with the cleaned up datas
+gulp.task('content:index', () => {
+    gulp.src(globs.index)
+        .pipe(frontMatter({
+            property: 'metadata'
+        }))
+        .pipe(gulpTap((file, t) => {
+            file.data = {
+                file: {
+                    meta: file.metadata
+                }
+            };
+        }))
+        .pipe(gulpJade({
+            pretty: true
+        }))
+        .pipe(gulpTap((file, t) => {
+            console.log(file.data)
+        }))
+        .pipe(insert2Template({}))
+        .pipe(gulpTap((file, t) => {
+            console.log(file.data)
+        }))
         .pipe(gulp.dest(dirs.dest));
 });
 

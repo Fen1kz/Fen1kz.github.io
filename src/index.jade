@@ -1,0 +1,11 @@
+---
+title: home
+---
+div.feed.feed-posts
+    //{{~it.collections.posts :post:index}}
+    div.feed-post
+        h2.header #{file.meta.title}
+        //{{=post.title}}</h2>
+        div.content.
+            good index!
+            //{{=post.contents.slice(0,-1)}}

@@ -3,6 +3,7 @@ let gutil = require('gulp-util');
 let jade = require('jade');
 let util = require('util');
 let fs = require("fs");
+let _ = require("lodash");
 
 let extend = util._extend;
 let ext = gutil.replaceExtension;
@@ -16,6 +17,7 @@ function gulpPrefixer(options) {
     }, options);
 
     console.log('compiling template');
+    opts.filename = './src/theme/index.jade';
     let template = fs.readFileSync('./src/theme/index.jade');
     //console.log(file);
     let compiledTemplate = jade.compile(template, opts);
@@ -28,12 +30,8 @@ function gulpPrefixer(options) {
 
         if (file.isBuffer()) {
             try {
-                let data = {
-                    file: {
-                        metadata: file.metadata
-                        , contents: String(file.contents)
-                    }
-                };
+                let data = _.clone(file.data, true);
+                data.file.contents = String(file.contents);
                 let compiledFile = compiledTemplate(data);
                 file.contents = new Buffer(compiledFile);
             } catch (e) {

@@ -1,8 +1,6 @@
 doctype html
 html
-    head
-        title #{file.metadata.title}
+    include ./partials/header.jade
     body
-        h1 My Site
-        p Welcome to my super lame site.
-        p #{file.metadata.title}
+        h1 #{file.meta.title}
+        div !{file.contents}
