@@ -4,6 +4,7 @@ export default (gulp, $, config) => {
     let dirs = config.dirs;
     let globs = config.globs;
     let insert2Template = require('./../lib/gulp-insert-to-template');
+    let rootMetadata = {};
 
     let meta = () => (through((readable) => (readable
             .pipe($.frontMatter({
@@ -15,6 +16,12 @@ export default (gulp, $, config) => {
                         meta: file.metadata
                     }
                 };
+            }))
+            .pipe($.tap((file, t) => {
+                let metadata = file.data.meta;
+                console.log(file);
+                console.log(file.data);
+                //rootMetadata
             }))
     )));
 
@@ -37,4 +44,6 @@ export default (gulp, $, config) => {
             .pipe(insert2Template({}))
             .pipe(gulp.dest(dirs.dist));
     });
+
+    gulp.task('content', ['content:index', 'content:md']);
 }
