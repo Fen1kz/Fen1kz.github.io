@@ -19,9 +19,7 @@ var globs = {
 
 globs = Object.assign(globs, {
     md: [globs.src + '.{md,txt}']
-    , txt: globs.src + '.txt'
-    , jade: [globs.index, globs.src + '.{md,txt}']
-    , theme: dirs.src + '/theme-dust/**/*.tpl'
+    , theme: dirs.src + '/theme-dust/**/*.tl'
 });
 
 console.log(globs);

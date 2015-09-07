@@ -56,39 +56,37 @@ function gulpPrefixer(options) {
         }
 
         if (file.isBuffer()) {
-            try {
-                let data = _.merge({}, file.data, {
-                    file: {
-                        contents: String(file.contents)
-                    }
-                });
-                Promise.all()
+            let data = _.merge({}, file.data, {
+                file: {
+                    contents: String(file.contents)
+                }
+            });
+            let templateName = (data.file.meta.template
+                ? `template-${data.file.meta.template}`
+                : `template`);
+            //let templateName = 'template';
+            let template = templates[templateName];
 
+            Promise.try(() => {
+                dust.loadSource(dust.compile(file.contents.toString(), file.path));
+                return dustRender$(file.path, data)
+            })
+                .then((content) => {
+                    data.file.contents = content;
+                    return dustRender$(template.name, data);
+                })
+                .then((rendered) => {
+                    file.contents = new Buffer(rendered);
 
+                    // make sure the file goes through the next gulp plugin
+                    fn.push(file);
 
-                file.contents = new Buffer(dust.compile(file.contents.toString(), file.relative));
-                let templateName = (data.file.meta.template
-                    ? `template-${data.file.meta.template}`
-                    : `template`);
-                //let templateName = 'template';
-                let template = templates[templateName];
-                dust.render(template.name, data, function(err, out) {
-                    if (err === null) {
-                        file.contents = new Buffer(out);
-
-                        // make sure the file goes through the next gulp plugin
-                        fn.push(file);
-
-                        // tell the stream engine that we are done with this file
-                        cb();
-                    } else {
-                        console.error(err);
-                        return cb(new PluginError(PLUGIN_NAME, err));
-                    }
-                });
-            } catch (e) {
-                return cb(new PluginError(PLUGIN_NAME, e));
-            }
+                    // tell the stream engine that we are done with this file
+                    cb();
+                })
+                .catch((e) => {
+                    return cb(new PluginError(PLUGIN_NAME, e));
+                })
         }
     };
 

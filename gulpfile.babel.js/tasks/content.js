@@ -39,6 +39,7 @@ export default (gulp, $, config) => {
         gulp.src(globs.index)
             .pipe(meta())
             .pipe(insert2Template({}))
+            .pipe($.extReplace('.html'))
             .pipe(gulp.dest(dirs.dist));
     });
 
