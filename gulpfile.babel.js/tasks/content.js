@@ -38,9 +38,6 @@ export default (gulp, $, config) => {
     gulp.task('content:index', () => {
         gulp.src(globs.index)
             .pipe(meta())
-            .pipe($.jade({
-                pretty: true
-            }))
             .pipe(insert2Template({}))
             .pipe(gulp.dest(dirs.dist));
     });

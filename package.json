@@ -12,9 +12,11 @@
   "devDependencies": {
     "babel-core": "^5.8.23",
     "bluebird": "^2.9.34",
+    "dustjs-linkedin": "^2.7.2",
     "glob": "^5.0.14",
     "gulp": "^3.9.0",
     "gulp-babel": "^5.2.1",
+    "gulp-dust-compile-render": "^0.2.7",
     "gulp-ext-replace": "^0.2.0",
     "gulp-foreach": "^0.1.0",
     "gulp-front-matter": "^1.2.3",
