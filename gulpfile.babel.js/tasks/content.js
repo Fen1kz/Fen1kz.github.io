@@ -14,7 +14,7 @@ export default (gulp, $, config) => {
         tags: {}
     };
 
-    let meta = () => (through((readable) => (readable
+    let fillMeta = () => (through((readable) => (readable
         .pipe($.frontMatter({
             property: 'metadata'
         }))
@@ -45,20 +45,6 @@ export default (gulp, $, config) => {
                 log(`set title: ${meta.title}`);
             }
 
-            if (meta.tags) {
-                meta.tags.split(',').map((metaTag) => {
-                    let tag = _.chain(metaTag).trim().kebabCase().value();
-                    if (!rootMetadata.tags[tag]) {
-                        rootMetadata.tags[tag] = [];
-                    }
-                    rootMetadata.tags[tag].push(gutil.replaceExtension(file.relative, '.html'));
-                });
-                console.log('root:', rootMetadata);
-                //rootMetadata
-            }
-
-            //rootMetadata
-
             let metadataToWrite = _.map(meta, (value, key) => {
                 return `${key}: ${value}`;
             }).join('\n');
@@ -70,7 +56,9 @@ export default (gulp, $, config) => {
                 file.contents
             ]);
         }))
-        .pipe(gulp.dest(dirs.src))
+        .pipe(gulp.dest(dirs.src)))));
+
+    let getMeta = () => (through((readable) => (readable
         .pipe($.frontMatter({
             property: 'metadata'
         }))
@@ -80,13 +68,29 @@ export default (gulp, $, config) => {
                     meta: file.metadata
                 }
             };
+        }))
+        .pipe($.tap((file, t) => {
+            let meta = file.data.file.meta;
+
+            if (meta.tags) {
+                meta.tags.split(',').map((metaTag) => {
+                    let tag = _.chain(metaTag).trim().kebabCase().value();
+                    if (!rootMetadata.tags[tag]) {
+                        rootMetadata.tags[tag] = [];
+                    }
+                    rootMetadata.tags[tag].push(gutil.replaceExtension(file.relative, '.html'));
+                });
+                console.log('root:', rootMetadata);
+                //rootMetadata
+            }
         })))));
 
     gulp.task('content:md', () => {
-        gulp.src(globs.md)
+        let markdown = gulp.src(globs.md)
             .pipe(meta())
             .pipe($.extReplace('.md'))
             .pipe($.marked())
+
             .pipe(insert2Template({}))
             .pipe($.extReplace('.html'))
             .pipe(gulp.dest(dirs.dist));
