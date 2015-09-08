@@ -14,7 +14,7 @@ var dirs = require('./dirs');
 
 var globs = {
     src: dirs.src + '/**/*'
-    , index: dirs.src + '/index.*'
+    , root: dirs.src + '/root/**/*.*'
 };
 
 globs = Object.assign(globs, {

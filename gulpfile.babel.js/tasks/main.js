@@ -37,6 +37,6 @@ export default function (gulp, $, config) {
     gulp.task('build', $.sequence('dist:clean', ['vendor', 'scripts', 'content']));
 
     gulp.task('watch', ['build'], () => {
-        gulp.watch([globs.theme, globs.scripts], ['content', 'scripts']);
+        gulp.watch([globs.src], ['meta:read', 'content', 'scripts']);
     });
 }

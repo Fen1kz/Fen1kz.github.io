@@ -16,6 +16,7 @@ let ext = gutil.replaceExtension;
 let PluginError = gutil.PluginError;
 
 let dustRender$ = Promise.promisify(dust.render);
+let dustHelpers = require('./dust-helpers');
 
 const PLUGIN_NAME = 'gulp-template';
 
@@ -23,12 +24,14 @@ let log = (msg) => gutil.log(gutil.colors.cyan('gulp-insert-to-template'), msg);
 
 function gulpPrefixer(options) {
     log('start');
+    options = options || {};
 
     let opts = extend({
         whitespace: true
-    }, options);
+    }, options.config);
 
     Object.assign(dust.config, opts);
+    Object.assign(dust.helpers, dustHelpers);
 
     let templates = {};
     let files = glob.sync(config.globs.theme);
@@ -56,11 +59,12 @@ function gulpPrefixer(options) {
         }
 
         if (file.isBuffer()) {
+            //console.log(file.path, options.data);
             let data = _.merge({}, file.data, {
                 file: {
                     contents: String(file.contents)
                 }
-            });
+            }, options.data);
             let templateName = (data.file.meta.template
                 ? `template-${data.file.meta.template}`
                 : `template`);
@@ -73,6 +77,7 @@ function gulpPrefixer(options) {
             })
                 .then((content) => {
                     data.file.contents = content;
+                    log(`rendering ${template.name}`);
                     return dustRender$(template.name, data);
                 })
                 .then((rendered) => {
