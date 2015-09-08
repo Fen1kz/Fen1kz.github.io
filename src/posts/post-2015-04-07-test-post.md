@@ -2,8 +2,7 @@
 title: test post
 category: code
 tags: test
-date: 2015-04-07
-time: 1428417352699
----
+timestamp: 1441675981927
+ ---
 
 second post

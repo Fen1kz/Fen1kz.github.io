@@ -2,9 +2,8 @@
 title: Cool link decoration effect
 category: snippet
 tags: css, design, style
-date: 2015-04-09
-time: 1428577377894
----
+timestamp: 1428577377894
+ ---
 ```
 .posts-expand .post-title-link::before {
   content: "";
