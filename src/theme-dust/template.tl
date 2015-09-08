@@ -4,15 +4,38 @@
     <meta charset="UTF-8"/>
     <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>-->
     <title>{file.meta.title}</title><!-- Compiled and minified CSS -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/css/materialize.min.css">
     <!-- Compiled and minified JavaScript -->
+    <script src="/vendor/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/js/materialize.min.js"></script>
+    <script src="/scripts/script.js"></script>
 </head>
 <body>
-{+body}
-<h1>{file.meta.title}</h1>
+<nav>
+    <div class="nav-wrapper container">
+        <a href="/" class="brand-logo">Lavasystems Corp.</a>
+        <a href="#" data-activates="root-side-nav" class="right side-nav-btn"><i class="material-icons">menu</i></a>
+        <ul class="right hide-on-med-and-down">
+            <li><a href="sass.html">Sass</a></li>
+            <li><a href="badges.html">Components</a></li>
+            <li><a href="collapsible.html">Javascript</a></li>
+            <li><a href="mobile.html">Mobile</a></li>
+        </ul>
+        <ul class="side-nav" id="root-side-nav">
+            <li><a href="sass.html">Sass</a></li>
+            <li><a href="badges.html">Components</a></li>
+            <li><a href="collapsible.html">Javascript</a></li>
+            <li><a href="mobile.html">Mobile</a></li>
+        </ul>
+    </div>
+</nav>
+<div class="container">
+    {+body}
+        <h1>{file.meta.title}</h1>
 
-<div>{file.contents|s}</div>
-{/body}
+        <div>{file.contents|s}</div>
+    {/body}
+</div>
 </body>
 </html>

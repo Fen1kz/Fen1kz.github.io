@@ -20,8 +20,7 @@ var globs = {
 globs = Object.assign(globs, {
     md: [globs.src + '.{md,txt}']
     , theme: dirs.src + '/theme-dust/**/*.tl'
+    , scripts: dirs.src + '/theme-dust/js/**/*.js'
 });
-
-console.log(globs);
 
 module.exports = globs;

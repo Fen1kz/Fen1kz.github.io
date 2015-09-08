@@ -1,6 +1,7 @@
 let path = require('path');
 let gutil = require('gulp-util');
 let through = require('through-pipes');
+let eventStream = require('event-stream');
 let _ = require('lodash');
 
 let log = (msg) => gutil.log(gutil.colors.cyan('gulp-content'), msg);
@@ -10,11 +11,9 @@ export default (gulp, $, config) => {
     let dirs = config.dirs;
     let globs = config.globs;
     let insert2Template = require('./../lib/gulp-insert-to-template');
-    let rootMetadata = {
-        tags: {}
-    };
+    let globalMetadata;
 
-    let fillMeta = () => (through((readable) => (readable
+    let writeMeta = () => (through((readable) => (readable
         .pipe($.frontMatter({
             property: 'metadata'
         }))
@@ -58,51 +57,49 @@ export default (gulp, $, config) => {
         }))
         .pipe(gulp.dest(dirs.src)))));
 
-    let getMeta = () => (through((readable) => (readable
-        .pipe($.frontMatter({
-            property: 'metadata'
-        }))
-        .pipe($.tap((file, t) => {
-            file.data = {
-                file: {
-                    meta: file.metadata
-                }
+    let readMeta = () => (through((readable) => {
+            globalMetadata = {
+                tags: {}
             };
-        }))
-        .pipe($.tap((file, t) => {
-            let meta = file.data.file.meta;
+            return readable
+                .pipe($.frontMatter({
+                    property: ''
+                }))
+                .pipe($.tap((file, t) => {
+                    let meta = file.data.file.meta;
+                    console.log('meta:', meta);
+                    console.log('base:', path.dirname(file.relative));
 
-            if (meta.tags) {
-                meta.tags.split(',').map((metaTag) => {
-                    let tag = _.chain(metaTag).trim().kebabCase().value();
-                    if (!rootMetadata.tags[tag]) {
-                        rootMetadata.tags[tag] = [];
+                    if (meta.tags) {
+                        meta.tags.split(',').map((metaTag) => {
+                            let tag = _.chain(metaTag).trim().kebabCase().value();
+                            if (!globalMetadata.tags[tag]) {
+                                globalMetadata.tags[tag] = [];
+                            }
+                            let fileUrl = gutil.replaceExtension(file.relative, '.html').replace('\\', '/');
+                            globalMetadata.tags[tag].push(fileUrl);
+                        });
                     }
-                    rootMetadata.tags[tag].push(gutil.replaceExtension(file.relative, '.html'));
-                });
-                console.log('root:', rootMetadata);
-                //rootMetadata
-            }
-        })))));
+                }))
+                .on('end', () => {
+                    console.log('root:', globalMetadata);
+                })
+        }
+    ));
 
-    gulp.task('content:md', () => {
+    gulp.task('content', () => {
         let markdown = gulp.src(globs.md)
-            .pipe(meta())
+            .pipe(writeMeta())
             .pipe($.extReplace('.md'))
-            .pipe($.marked())
+            .pipe($.marked());
 
+        let index = gulp.src(globs.index)
+            .pipe(writeMeta());
+
+        return eventStream.merge(index, markdown)
+            .pipe(readMeta())
             .pipe(insert2Template({}))
             .pipe($.extReplace('.html'))
             .pipe(gulp.dest(dirs.dist));
     });
-
-    gulp.task('content:index', () => {
-        gulp.src(globs.index)
-            .pipe(meta())
-            .pipe(insert2Template({}))
-            .pipe($.extReplace('.html'))
-            .pipe(gulp.dest(dirs.dist));
-    });
-
-    gulp.task('content', ['content:index', 'content:md']);
 }

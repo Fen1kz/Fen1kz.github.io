@@ -12,4 +12,6 @@ module.exports = {
   // Where compiled scripts and assets should be placed.
   'src'   : './src'
   , 'dist'  : './site'
+  , 'dist_vendor'  : './site/vendor/'
+  , 'dist_scripts'  : './site/scripts/'
 };
