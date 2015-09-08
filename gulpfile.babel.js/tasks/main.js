@@ -31,7 +31,7 @@ export default function (gulp, $, config) {
     });
 
     gulp.task('deploy', ['build'], () => {
-        return gulp.src(globs.src)
+        return gulp.src(dirs.dist)
             .pipe($.ghPages({
                 branch: 'master'
             }));
