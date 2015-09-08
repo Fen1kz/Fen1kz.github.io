@@ -20,6 +20,7 @@ a::before {
     transition-timing-function: ease-in-out;
     transition-delay: 0s;
 }
+
 a:hover::before {
     visibility: visible;
     transform: scaleX(1);
