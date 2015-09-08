@@ -21,6 +21,7 @@ let dustHelpers = require('./dust-helpers');
 const PLUGIN_NAME = 'gulp-template';
 
 let log = (msg) => gutil.log(gutil.colors.cyan('gulp-insert-to-template'), msg);
+let warn = (msg) => gutil.log(gutil.colors.yellow('gulp-insert-to-template'), msg);
 
 function gulpPrefixer(options) {
     log('start');
@@ -59,7 +60,13 @@ function gulpPrefixer(options) {
         }
 
         if (file.isBuffer()) {
-            //console.log(file.path, options.data);
+            if (!file.data) warn(`${file.path} has not file.data`);
+            file.data = file.data || {};
+            if (!file.data.file) warn(`${file.path} has not file.data.file`);
+            file.data.file = file.data.file || {};
+            if (!file.data.file.meta) warn(`${file.path} has not file.data.file.meta`);
+            file.data.file.meta = file.data.file.meta || {};
+
             let data = _.merge({}, file.data, {
                 file: {
                     contents: String(file.contents)
@@ -77,7 +84,7 @@ function gulpPrefixer(options) {
             })
                 .then((content) => {
                     data.file.contents = content;
-                    log(`rendering ${template.name}`);
+                    log(`rendering (${template.name}) ${file.path}`);
                     return dustRender$(template.name, data);
                 })
                 .then((rendered) => {

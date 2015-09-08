@@ -13,20 +13,9 @@ export default (gulp, $, config) => {
     let dirs = config.dirs;
     let globs = config.globs;
     let insert2Template = require('./../lib/gulp-insert-to-template');
+    let fghioCollections = require('./../lib/gulp-fghio-collections');
+    let readMetadata = require('./../lib/gulp-read-metadata');
     let globalMetadata;
-
-    let readMetadata = () => (throughPipes((readable) => (readable
-            .pipe($.frontMatter({
-                property: 'metadata'
-            }))
-            .pipe($.tap((file, t) => {
-                file.data = {
-                    file: {
-                        meta: file.metadata
-                    }
-                };
-            }))
-    )));
 
     let writeMetadata = () => (throughPipes((readable) => (readable
             .pipe(readMetadata())
@@ -136,6 +125,9 @@ export default (gulp, $, config) => {
             , gulp.src(globs.root)
                 .pipe(readMetadata())
         )
+            .pipe(fghioCollections({
+                data: globalMetadata.collections
+            }))
             .pipe(insert2Template({
                 data: {
                     global: globalMetadata

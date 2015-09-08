@@ -6,6 +6,7 @@
     <title>{file.meta.title}</title><!-- Compiled and minified CSS -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/css/materialize.min.css">
+    <link rel="stylesheet" href="/css/style.css">
     <!-- Compiled and minified JavaScript -->
     <script src="/js/vendor/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/js/materialize.min.js"></script>
@@ -15,7 +16,8 @@
 <nav>
     <div class="nav-wrapper container">
         <a href="/" class="brand-logo">Lavasystems Corp.</a>
-        <a href="#" data-activates="root-side-nav" class="side-nav-btn right hide-on-large-only"><i class="material-icons">menu</i></a>
+        <a href="#" data-activates="root-side-nav" class="side-nav-btn right hide-on-large-only">
+            <i class="material-icons">menu</i></a>
         <ul class="right hide-on-med-and-down">
             <li><a href="/tags">Tags</a></li>
             <li><a href="/collections">Collections</a></li>
@@ -28,7 +30,7 @@
 </nav>
 <div class="container">
     {+body}
-        <h1>{file.meta.title}</h1>
+        <h2>{?file.meta.header}{file.meta.header|s}{:else}{file.meta.title|s}{/file.meta.header}</h2>
 
         <div>{file.contents|s}</div>
     {/body}

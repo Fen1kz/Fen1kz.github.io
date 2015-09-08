@@ -19,6 +19,7 @@
     "gulp-babel": "^5.2.1",
     "gulp-dust-compile-render": "^0.2.7",
     "gulp-ext-replace": "^0.2.0",
+    "gulp-file": "^0.2.0",
     "gulp-foreach": "^0.1.0",
     "gulp-front-matter": "^1.2.3",
     "gulp-gh-pages": "^0.5.2",

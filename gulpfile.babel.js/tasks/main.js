@@ -8,7 +8,7 @@ export default function (gulp, $, config) {
     gulp.task('vendor', () => {
         return eventStream.merge(
             gulp.src('./node_modules/jquery/dist/jquery.min.js')
-                .pipe(gulp.dest(dirs.dist_vendor))
+                .pipe(gulp.dest(dirs.dist$.vendor))
             //gulp.src('node_modules/modernizr/dist/modernizr-build.min.js')
             //    .pipe($.rename('modernizr.min.js'))
             //    .pipe($.uglify())
@@ -18,25 +18,28 @@ export default function (gulp, $, config) {
 
     gulp.task('scripts', () => {
         return gulp.src(globs.scripts)
-            .pipe(gulp.dest(dirs.dist_scripts))
+            .pipe(gulp.dest(dirs.dist$.scripts))
+    });
+
+    gulp.task('styles', () => {
+        return gulp.src(globs.styles)
+            .pipe(gulp.dest(dirs.dist$.styles))
     });
 
     gulp.task('dist:clean', (cb) => {
         return rimraf(dirs.dist, cb);
     });
 
-    gulp.task('deploy', () => {
+    gulp.task('deploy', ['build'], () => {
         return gulp.src(globs.src)
             .pipe($.ghPages({
                 branch: 'master'
             }));
     });
 
-    gulp.task('default', ['hello']);
-
-    gulp.task('build', $.sequence('dist:clean', ['vendor', 'scripts', 'content']));
+    gulp.task('build', $.sequence('dist:clean', ['vendor', 'content', 'scripts', 'styles']));
 
     gulp.task('watch', ['build'], () => {
-        gulp.watch([globs.src], ['meta:read', 'content', 'scripts']);
+        gulp.watch([globs.src], ['content', 'scripts', 'styles']);
     });
 }
