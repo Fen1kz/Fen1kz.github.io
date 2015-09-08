@@ -30,10 +30,12 @@ export default function (gulp, $, config) {
         return rimraf(dirs.dist, cb);
     });
 
-    gulp.task('deploy', ['build'], () => {
-        return gulp.src(dirs.dist)
+    gulp.task('deploy', () => {
+        return gulp.src('./site/**/*.*')
             .pipe($.ghPages({
                 branch: 'master'
+                , force: true
+                , push: true
             }));
     });
 
