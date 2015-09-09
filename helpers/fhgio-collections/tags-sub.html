@@ -5,9 +5,10 @@ title: <%= collectionName %>/<%= itemName %>
 header: <a href="/<%= collectionName %>/"><%= collectionName %></a>/<%= itemName %>
 ---
 <!--<div class="z-depth-1 padding">-->
+<div>
     <div class="collection">
         {@loop:global.<%= collectionName %>.<%= itemName %>}
         <a class="collection-item" href="/{value.href}">{value.meta.title}</a>
         {/loop}
     </div>
-<!--</div>-->
+</div>

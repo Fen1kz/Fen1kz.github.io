@@ -2,6 +2,7 @@
 title: Home
 template: raw
 timestamp: 1441677490858
+breadcrumbs:
 ---
 <div class="feed feed-posts">
     <div class="feed-post">

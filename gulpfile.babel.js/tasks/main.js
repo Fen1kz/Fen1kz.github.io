@@ -1,7 +1,6 @@
 let rimraf = require('rimraf');
 let eventStream = require('event-stream');
 
-let fs = require('fs');
 let browserify = require('browserify');
 let babelify = require('babelify');
 let source = require('vinyl-source-stream');
@@ -9,6 +8,11 @@ let source = require('vinyl-source-stream');
 export default function (gulp, $, config) {
     let dirs = config.dirs;
     let globs = config.globs;
+
+    gulp.task('raw'), () => {
+        return gulp.src(globs.raw)
+            .pipe(gulp.dest(dirs.dist))
+    };
 
     gulp.task('vendor', () => {
         return eventStream.merge(
@@ -53,9 +57,9 @@ export default function (gulp, $, config) {
             }));
     });
 
-    gulp.task('build', $.sequence('dist:clean', ['vendor', 'content', 'scripts', 'styles', 'collections']));
+    gulp.task('build', $.sequence('dist:clean', ['vendor', 'content', 'scripts', 'styles', 'collections', 'raw']));
 
     gulp.task('watch', ['build'], () => {
-        gulp.watch([globs.src, globs.helpers], ['content', 'scripts', 'styles', 'collections']);
+        gulp.watch([globs.src, globs.helpers, globs.raw], ['content', 'scripts', 'styles', 'collections']);
     });
 }

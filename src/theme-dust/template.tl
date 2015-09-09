@@ -30,6 +30,10 @@
     </div>
 </nav>
 <div class="container">
+    <div>
+        {file.breadcrumbs|s}
+    </div>
+
     {+body}
         <h2>{?file.meta.header}{file.meta.header|s}{:else}{file.meta.title|s}{/file.meta.header}</h2>
 

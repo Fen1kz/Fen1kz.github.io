@@ -27,6 +27,7 @@
     "gulp-foreach": "^0.1.0",
     "gulp-front-matter": "^1.2.3",
     "gulp-gh-pages": "^0.5.2",
+    "gulp-if": "^1.2.5",
     "gulp-load-plugins": "^1.0.0-rc.1",
     "gulp-marked": "^1.0.0",
     "gulp-minify-css": "^1.2.1",

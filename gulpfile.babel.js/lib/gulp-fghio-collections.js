@@ -6,7 +6,6 @@ let $ = {
     , file: require('gulp-file')
     , frontMatter: require('gulp-front-matter')
 };
-let stream = require('stream');
 let through2 = require('through2');
 let eventStream = require('event-stream');
 let readMetadata = require('./gulp-read-metadata');
@@ -19,6 +18,7 @@ function fghioCollections(options) {
     log('start');
     let collectionName = options.name;
     let collection = options.data[collectionName];
+    let directory = options.directory !== void 0 ? options.directory : (collectionName + '/');
 
     let promise = Promise.all([
         fsReadFuleAsync(options.templates.main)
@@ -31,16 +31,21 @@ function fghioCollections(options) {
             let collectionsIndex = $.file(`${collectionName}/index.tl`, mainTemplate({
                 collectionName: collectionName
                 , CollectionName: _.startCase(collectionName)
+                , directory: directory
             }), {src: true})
                 .pipe(readMetadata());
 
             let collectionArray = _.map(collection, (itemValue, itemName) => {
-                return $.file(`${collectionName}/${itemName}/index.tl`, subTemplate({
+                return $.file(`${directory}${itemName}/index.tl`, subTemplate({
                     collectionName: collectionName
                     , CollectionName: _.startCase(collectionName)
                     , itemName: itemName
                     , ItemName: _.startCase(itemName)
                 }), {src: true})
+                    //.pipe($.tap(file => {
+                    //    console.log('path', file.path);
+                    //    console.log('generated', directory, `${directory}${itemName}/index.tl`);
+                    //}))
                     .pipe(readMetadata());
             });
 

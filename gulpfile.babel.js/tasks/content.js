@@ -21,6 +21,7 @@ export default (gulp, $, config) => {
             .pipe(readMetadata())
             .pipe($.tap((file, t) => {
                 let meta = file.data.file.meta;
+                let changed = false;
                 //let copy = _.clone(file, true);
                 //delete copy.contents;
                 //delete copy._contents;
@@ -30,29 +31,36 @@ export default (gulp, $, config) => {
                 if (!meta.timestamp) {
                     warn(`Found post without timestamp: ${file.path}`);
                     meta.timestamp = new Date().getTime();
+                    changed = true;
                     log(`set timestamp: ${meta.timestamp}`);
                 }
 
                 if (!meta.title) {
                     warn(`Found post without title: ${file.path}`);
                     meta.title = $path.basename(file.path, $path.extname(file.path));
+                    changed = true;
                     log(`set title: ${meta.title}`);
                 }
                 meta.title = _.startCase(meta.title);
 
                 let metadataToWrite = _.map(meta, (value, key) => {
-                    return `${key}: ${value}`;
-                }).join('\n');
+                    return (_.startsWith(key, '$')
+                        ? `${key}: ${value}`
+                        : null);
+                }).filter((item) => item !== null).join('\n');
 
                 metadataToWrite = '---\n' + metadataToWrite + '\n---\n';
                 //console.log(metadataToWrite);
 
-                file.contents = Buffer.concat([
-                    new Buffer(metadataToWrite),
-                    file.contents
-                ]);
+                if (changed) {
+                    file.data.changed = true;
+                    file.contents = Buffer.concat([
+                        new Buffer(metadataToWrite),
+                        file.contents
+                    ]);
+                }
             }))
-            .pipe(gulp.dest(dirs.src))
+            .pipe($.if((file) => file.data.changed, gulp.dest(dirs.src)))
     )));
 
     let collectionsMap = {
@@ -129,10 +137,11 @@ export default (gulp, $, config) => {
             .pipe(readGlobalMetadata());
     });
 
-    gulp.task('collections:collections', ['meta:read'], (cb) => {
+    gulp.task('collections:collections', ['meta:read'], () => {
         return fghioCollections({
             name: 'collections'
             , data: globalMetadata
+            , directory: ''
             , templates: {
                 main: './helpers/fhgio-collections/collections-main.html'
                 , sub: './helpers/fhgio-collections/collections-sub.html'
@@ -140,7 +149,7 @@ export default (gulp, $, config) => {
         }).pipe(insertAndPlace());
     });
 
-    gulp.task('collections:tags', ['meta:read'], (cb) => {
+    gulp.task('collections:tags', ['meta:read'], () => {
         return fghioCollections({
             name: 'tags'
             , data: globalMetadata

@@ -84,7 +84,7 @@ function gulpPrefixer(options) {
             })
                 .then((content) => {
                     data.file.contents = content;
-                    log(`rendering (${template.name}) ${file.path}`);
+                    //log(`rendering (${template.name}) ${file.path}`);
                     return dustRender$(template.name, data);
                 })
                 .then((rendered) => {

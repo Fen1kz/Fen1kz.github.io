@@ -15,6 +15,7 @@ var dirs = require('./dirs');
 var globs = {
     src: dirs.src + '/**/*'
     , root: dirs.src + '/root/**/*'
+    , raw: dirs.src + '/_raw/**/*'
     , helpers: './helpers/**/*'
 };
 
