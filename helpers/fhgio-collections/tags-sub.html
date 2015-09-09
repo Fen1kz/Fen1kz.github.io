@@ -9,7 +9,10 @@ header: <a href="/<%= collectionName %>/"><%= collectionName %></a>/<%= itemName
 <div>
     <div class="collection">
         {@loop:global.<%= collectionName %>.<%= itemName %>}
-        <a class="collection-item" href="/{value.href}">{value.meta.title}</a>
+        <a class="collection-item" href="/{value.href}">
+            <span class="collection-post-text">{value.meta.title}</span>
+            <span class="font-size-85 grey-text">@<span class="timestamp-to-date">{value.meta.timestamp}</span></span>
+        </a>
         {/loop}
     </div>
 </div>

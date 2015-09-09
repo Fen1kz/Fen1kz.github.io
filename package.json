@@ -22,6 +22,7 @@
     "gulp-babel": "^5.2.1",
     "gulp-concat": "^2.6.0",
     "gulp-dust-compile-render": "^0.2.7",
+    "gulp-expect-file": "0.0.7",
     "gulp-ext-replace": "^0.2.0",
     "gulp-file": "^0.2.0",
     "gulp-foreach": "^0.1.0",
@@ -46,6 +47,7 @@
     "vinyl-source-stream": "^1.1.0"
   },
   "dependencies": {
-    "lodash": "^3.10.1"
+    "lodash": "^3.10.1",
+    "moment": "^2.10.6"
   }
 }

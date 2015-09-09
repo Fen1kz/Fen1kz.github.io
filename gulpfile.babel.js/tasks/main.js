@@ -14,27 +14,6 @@ export default function (gulp, $, config) {
             .pipe(gulp.dest(dirs.dist))
     };
 
-    gulp.task('vendor:js', () => {
-        return eventStream.merge(
-            gulp.src('./node_modules/jquery/dist/jquery.min.*')
-                .pipe(gulp.dest(dirs.dist$.vendor.js))
-            , gulp.src('./node_modules/moment/min/moment.min.js')
-                .pipe(gulp.dest(dirs.dist$.vendor.js)))
-    });
-
-    gulp.task('vendor:css', () => {
-        return eventStream.merge(
-            gulp.src('./node_modules/prismjs/dist/prism-default/prism-default.css'))
-            .pipe($.concat('vendor.min.css'))
-            //.pipe($.rename(path => {
-            //    console.log(path);
-            //    'vendor.min.css'
-            //}))
-            .pipe(gulp.dest(dirs.dist$.styles))
-    });
-
-    gulp.task('vendor', ['vendor:js', 'vendor:css']);
-
     gulp.task('scripts', () => {
         return browserify({debug: true})
             .transform(babelify)
