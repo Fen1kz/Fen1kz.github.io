@@ -14,13 +14,13 @@ var dirs = require('./dirs');
 
 var globs = {
     src: dirs.src + '/**/*'
-    , root: dirs.src + '/root/**/*.*'
+    , root: dirs.src + '/root/**/*'
+    , helpers: './helpers/**/*'
 };
 
 globs = Object.assign(globs, {
     md: [globs.src + '.{md,txt}']
     , theme: dirs.src + '/theme-dust/**/*.tl'
-    , scripts: dirs.src + '/theme-dust/js/**/*.js'
     , styles: dirs.src + '/theme-dust/css/**/*.css'
 });
 

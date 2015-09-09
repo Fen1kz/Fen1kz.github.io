@@ -1,4 +1,5 @@
 let _ = require('lodash');
+let dateformat = require('dateformat');
 
 export default {
     loop: (chunk, ctx, bodies) => {

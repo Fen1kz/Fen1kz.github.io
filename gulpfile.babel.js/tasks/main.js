@@ -1,24 +1,34 @@
 let rimraf = require('rimraf');
 let eventStream = require('event-stream');
 
+let fs = require('fs');
+let browserify = require('browserify');
+let babelify = require('babelify');
+let source = require('vinyl-source-stream');
+
 export default function (gulp, $, config) {
     let dirs = config.dirs;
     let globs = config.globs;
 
     gulp.task('vendor', () => {
         return eventStream.merge(
-            gulp.src('./node_modules/jquery/dist/jquery.min.js')
+            gulp.src('./node_modules/jquery/dist/jquery.min.*')
                 .pipe(gulp.dest(dirs.dist$.vendor))
-            //gulp.src('node_modules/modernizr/dist/modernizr-build.min.js')
-            //    .pipe($.rename('modernizr.min.js'))
-            //    .pipe($.uglify())
-            //    .pipe(gulp.dest('build/vendor/modernizr-' + pkgs.modernizr))
-        );
+            , gulp.src('./node_modules/moment/min/moment.min.js')
+                .pipe(gulp.dest(dirs.dist$.vendor)))
     });
 
     gulp.task('scripts', () => {
-        return gulp.src(globs.scripts)
-            .pipe(gulp.dest(dirs.dist$.scripts))
+        return browserify({debug: true})
+            .transform(babelify)
+            .require(dirs.src + '/theme-dust/js/script.js', {entry: true})
+            .bundle()
+            .on('error', function handleError(err) {
+                console.error(err.toString());
+                this.emit('end');
+            })
+            .pipe(source('bundle.js'))
+            .pipe(gulp.dest(dirs.dist$.scripts));
     });
 
     gulp.task('styles', () => {
@@ -43,9 +53,9 @@ export default function (gulp, $, config) {
             }));
     });
 
-    gulp.task('build', $.sequence('dist:clean', ['vendor', 'content', 'scripts', 'styles']));
+    gulp.task('build', $.sequence('dist:clean', ['vendor', 'content', 'scripts', 'styles', 'collections']));
 
     gulp.task('watch', ['build'], () => {
-        gulp.watch([globs.src], ['content', 'scripts', 'styles']);
+        gulp.watch([globs.src, globs.helpers], ['content', 'scripts', 'styles', 'collections']);
     });
 }

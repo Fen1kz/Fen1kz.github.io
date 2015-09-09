@@ -9,8 +9,9 @@
     <link rel="stylesheet" href="/css/style.min.css">
     <!-- Compiled and minified JavaScript -->
     <script src="/js/vendor/jquery.min.js"></script>
+    <script src="/js/vendor/moment.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/js/materialize.min.js"></script>
-    <script src="/js/script.js"></script>
+    <script src="/js/bundle.js"></script>
 </head>
 <body>
 <nav>
@@ -31,6 +32,8 @@
 <div class="container">
     {+body}
         <h2>{?file.meta.header}{file.meta.header|s}{:else}{file.meta.title|s}{/file.meta.header}</h2>
+
+        <div class="timestamp-to-date">{file.meta.timestamp}</div>
 
         <div>{file.contents|s}</div>
     {/body}

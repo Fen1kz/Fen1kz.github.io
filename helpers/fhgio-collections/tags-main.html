@@ -1,0 +1,12 @@
+---
+template: raw
+timestamp: 1441718580963
+title: <%= CollectionName %>
+---
+<!--<div class="z-depth-1 padding">-->
+    {@loop:global.<%= collectionName %>}
+    <div class="chip z-index-1">
+        <a class="collection-item" href="/<%= collectionName %>/{key}">{key} ({value.length})</a>
+    </div>
+    {/loop}
+<!--</div>-->

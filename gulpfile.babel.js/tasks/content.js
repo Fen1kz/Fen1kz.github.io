@@ -83,7 +83,10 @@ export default (gulp, $, config) => {
                             if (!globalMetadata.tags[tag]) {
                                 globalMetadata.tags[tag] = [];
                             }
-                            globalMetadata.tags[tag].push(fileUrl);
+                            globalMetadata.tags[tag].push({
+                                href: fileUrl
+                                , meta: meta
+                            });
                         });
                     }
 
@@ -126,30 +129,29 @@ export default (gulp, $, config) => {
             .pipe(readGlobalMetadata());
     });
 
-    //gulp.task('collections:collections', ['meta:read'], (cb) => {
-    gulp.task('collections:collections', () => {
+    gulp.task('collections:collections', ['meta:read'], (cb) => {
         return fghioCollections({
             name: 'collections'
             , data: globalMetadata
             , templates: {
-                main: './helpers/fhgio-collections/collections-main.tl'
-                , sub: './helpers/fhgio-collections/collections-sub.tl'
+                main: './helpers/fhgio-collections/collections-main.html'
+                , sub: './helpers/fhgio-collections/collections-sub.html'
             }
-        })
-            //.pipe(insertAndPlace());
-            .pipe($.tap((file) => {
-                console.log('tap', file);
-            }))
-            .on('close', function() {
-                console.log('close');
-            })
-            .on('end', function() {
-                console.log('end');
-            })
-            .on('finish', function() {
-                console.log('finish');
-            });
+        }).pipe(insertAndPlace());
     });
+
+    gulp.task('collections:tags', ['meta:read'], (cb) => {
+        return fghioCollections({
+            name: 'tags'
+            , data: globalMetadata
+            , templates: {
+                main: './helpers/fhgio-collections/tags-main.html'
+                , sub: './helpers/fhgio-collections/tags-sub.html'
+            }
+        }).pipe(insertAndPlace());
+    });
+
+    gulp.task('collections', ['collections:collections', 'collections:tags']);
 
     gulp.task('content', ['meta:read'], () => {
         return eventStream.merge(
@@ -159,11 +161,6 @@ export default (gulp, $, config) => {
                 .pipe($.marked())
             , gulp.src(globs.root)
                 .pipe(readMetadata())
-        )
-            //.pipe(fghioCollections({
-            //    name: 'tags'
-            //    , data: globalMetadata.tags
-            //}))
-            .pipe(insertAndPlace());
+        ).pipe(insertAndPlace());
     });
 }

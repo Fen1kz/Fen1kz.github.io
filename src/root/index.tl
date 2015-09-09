@@ -1,6 +1,6 @@
 ---
 title: Home
-template: index
+template: raw
 timestamp: 1441677490858
 ---
 <div class="feed feed-posts">
