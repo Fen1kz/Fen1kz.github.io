@@ -1,4 +1,6 @@
 {>"template"/}
-{<body}
-    {file.contents|s}
-{/body}
+{<content}
+    <div class="row">
+        {file.contents|s}
+    </div>
+{/content}

@@ -5,30 +5,25 @@
 
 'use strict';
 
+let Prism = require('prismjs');
+let gutil = require('gulp-util');
+
+let logger = {
+    warn: (plugin, msg) => gutil.log(gutil.colors.yellow(plugin), msg)
+};
 
 module.exports = {
-
-  'dist:styles': {
-    'keepSpecialComments': false,
-    'removeEmpty': true
-  },
-
-  'dist:appcache': {
-    'filename': 'offline.appcache',
-    'cache': [
-      'game.min.js',
-      'styles.min.css'
-    ],
-    'preferOnline': true,
-    'timestamp': true,
-    'network': [
-      'https://*',
-      'http://*',
-      '*'
-    ],
-    'fallback': [
-      '. index.html'
-    ]
-  }
-
+    markdown: {
+        langPrefix: 'language-'
+        , highlight: function (code, lang) {
+            //console.log(Prism);
+            if (Prism.languages[lang] === void 0) {
+                logger.warn('markdown', `cannot find languages[${lang}]`)
+                return code;
+            } else {
+                return `<pre class='language-${lang}'>${Prism.highlight(code, Prism.languages[lang])}</pre>`;
+                //return Prism.highlight(code, Prism.languages[lang]);
+            }
+        }
+    }
 };

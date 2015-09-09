@@ -21,6 +21,7 @@ let readBreadcrumbs = (options) => (
         let breadcrumbsArray = (meta.breadcrumbs
             ? meta.breadcrumbs.split('/')
             : file.relative.split($path.sep))
+            .map((item) => basenameOf(item))
             .filter((item, index, array) => {
                 return !(index === array.length - 1 && basenameOf(item) === 'index')
             })
@@ -45,9 +46,9 @@ let readBreadcrumbs = (options) => (
 
         breadcrumbsArray.unshift(makeLink('', '/' + options.index));
         if (lastItem) {
-            breadcrumbsArray.push(`<strong>${lastItem.text}</strong>`);
+            breadcrumbsArray.push(`<strong>${meta.title}</strong>`);
         }
-        file.data.file.breadcrumbs = breadcrumbsArray.join('/');
+        file.data.file.breadcrumbs = breadcrumbsArray.join('<span> / </span>');
     }));
 
 let readMetadata = () => (throughPipes((readable) => (readable

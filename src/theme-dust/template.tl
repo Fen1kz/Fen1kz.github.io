@@ -7,6 +7,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/css/materialize.min.css">
     <link rel="stylesheet" href="/css/style.min.css">
+    <link rel="stylesheet" href="/css/vendor.min.css">
     <!-- Compiled and minified JavaScript -->
     <script src="/js/vendor/jquery.min.js"></script>
     <script src="/js/vendor/moment.min.js"></script>
@@ -30,16 +31,18 @@
     </div>
 </nav>
 <div class="container">
-    <div>
-        {file.breadcrumbs|s}
-    </div>
-
     {+body}
-        <h2>{?file.meta.header}{file.meta.header|s}{:else}{file.meta.title|s}{/file.meta.header}</h2>
+        <div class="row padding">
+            <div class="col s6">{file.breadcrumbs|s}</div>
+            <div class="col s6 timestamp-to-date">{file.meta.timestamp}</div>
+        </div>
+            {+content}
+            <div class="row">
+                <h2>{?file.meta.header}{file.meta.header|s}{:else}{file.meta.title|s}{/file.meta.header}</h2>
 
-        <div class="timestamp-to-date">{file.meta.timestamp}</div>
-
-        <div>{file.contents|s}</div>
+                <div>{file.contents|s}</div>
+            </div>
+            {/content}
     {/body}
 </div>
 </body>

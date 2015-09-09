@@ -95,6 +95,7 @@ export default (gulp, $, config) => {
                                 href: fileUrl
                                 , meta: meta
                             });
+                            globalMetadata.tags[tag] = globalMetadata.tags[tag].sort((item1, item2) => item1.meta.timestamp < item2.meta.timestamp ? 1 : -1);
                         });
                     }
 
@@ -108,6 +109,9 @@ export default (gulp, $, config) => {
                                 });
                             }
                         });
+                        //console.log(globalMetadata.collections[collectionName].map(item => item.meta.title + ':' + item.meta.timestamp))
+                        globalMetadata.collections[collectionName] = globalMetadata.collections[collectionName].sort((item1, item2) => item1.meta.timestamp < item2.meta.timestamp ? 1 : -1);
+                        //console.log(globalMetadata.collections[collectionName].map(item => item.meta.title + ':' + item.meta.timestamp))
                     });
                     //console.log(file.path, 'metadata collection complete')
                 }))
@@ -167,7 +171,7 @@ export default (gulp, $, config) => {
             gulp.src(globs.md)
                 .pipe(readMetadata())
                 .pipe($.extReplace('.md'))
-                .pipe($.marked())
+                .pipe($.markdown(config.pluginOptions.markdown))
             , gulp.src(globs.root)
                 .pipe(readMetadata())
         ).pipe(insertAndPlace());

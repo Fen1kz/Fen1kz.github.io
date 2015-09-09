@@ -25,3 +25,7 @@ a:hover::before {
     visibility: visible;
     transform: scaleX(1);
 }
+
+.font-size-75 {
+    font-size: .75em;
+}

@@ -8,12 +8,15 @@
 'use strict';
 
 module.exports = {
-  // Where compiled scripts and assets should be placed.
-  'src'   : './src'
-  , 'dist'  : './site'
-  , dist$: {
-    vendor: './site/js/vendor/'
-    , 'scripts': './site/js/'
-    , 'styles': './site/css/'
-  }
+    // Where compiled scripts and assets should be placed.
+    'src': './src'
+    , 'dist': './site'
+    , dist$: {
+        vendor: {
+            js: './site/js/vendor/'
+            , css: './site/css/'
+        }
+        , 'scripts': './site/js/'
+        , 'styles': './site/css/'
+    }
 };
