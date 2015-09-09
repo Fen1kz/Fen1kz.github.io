@@ -23,6 +23,10 @@ export default function (gulp, $, config) {
 
     gulp.task('styles', () => {
         return gulp.src(globs.styles)
+            .pipe($.sourcemaps.init())
+            .pipe($.concat('style.min.css'))
+            .pipe($.minifyCss())
+            .pipe($.sourcemaps.write())
             .pipe(gulp.dest(dirs.dist$.styles))
     });
 

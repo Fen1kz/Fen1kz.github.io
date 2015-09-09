@@ -13,7 +13,7 @@ a::before {
     height: 2px;
     bottom: 0;
     left: 0;
-    background-color: #000;
+    background-color: currentColor;
     visibility: hidden;
     transform: scaleX(0);
     transition-duration: 0.2s;

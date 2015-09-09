@@ -1,7 +1,7 @@
 let $path = require('path');
 let gutil = require('gulp-util');
 let throughPipes = require('through-pipes');
-let through = require('through2');
+let through2 = require('through2');
 let eventStream = require('event-stream');
 let _ = require('lodash');
 let Promise = require('bluebird');
@@ -99,12 +99,22 @@ export default (gulp, $, config) => {
                         });
                     });
                     //console.log(file.path, 'metadata collection complete')
-                }));
-            //.on('end', () => {
-            //    console.log('root:', globalMetadata);
-            //})
+                }))
+                .on('end', () => {
+                    console.log('root:', globalMetadata);
+                })
         }
     ));
+
+    let insertAndPlace = () => (throughPipes((readable) => (readable
+            .pipe(insert2Template({
+                data: {
+                    global: globalMetadata
+                }
+            }))
+            .pipe($.extReplace('.html'))
+            .pipe(gulp.dest(dirs.dist))
+    )));
 
     gulp.task('meta:read', () => {
         return eventStream.merge(
@@ -116,6 +126,31 @@ export default (gulp, $, config) => {
             .pipe(readGlobalMetadata());
     });
 
+    //gulp.task('collections:collections', ['meta:read'], (cb) => {
+    gulp.task('collections:collections', () => {
+        return fghioCollections({
+            name: 'collections'
+            , data: globalMetadata
+            , templates: {
+                main: './helpers/fhgio-collections/collections-main.tl'
+                , sub: './helpers/fhgio-collections/collections-sub.tl'
+            }
+        })
+            //.pipe(insertAndPlace());
+            .pipe($.tap((file) => {
+                console.log('tap', file);
+            }))
+            .on('close', function() {
+                console.log('close');
+            })
+            .on('end', function() {
+                console.log('end');
+            })
+            .on('finish', function() {
+                console.log('finish');
+            });
+    });
+
     gulp.task('content', ['meta:read'], () => {
         return eventStream.merge(
             gulp.src(globs.md)
@@ -125,15 +160,10 @@ export default (gulp, $, config) => {
             , gulp.src(globs.root)
                 .pipe(readMetadata())
         )
-            .pipe(fghioCollections({
-                data: globalMetadata.collections
-            }))
-            .pipe(insert2Template({
-                data: {
-                    global: globalMetadata
-                }
-            }))
-            .pipe($.extReplace('.html'))
-            .pipe(gulp.dest(dirs.dist));
+            //.pipe(fghioCollections({
+            //    name: 'tags'
+            //    , data: globalMetadata.tags
+            //}))
+            .pipe(insertAndPlace());
     });
 }
