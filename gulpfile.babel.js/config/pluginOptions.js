@@ -18,7 +18,7 @@ module.exports = {
         , highlight: function (code, lang) {
             //console.log(Prism);
             if (Prism.languages[lang] === void 0) {
-                logger.warn('markdown', `cannot find languages[${lang}]`)
+                logger.warn('markdown', `cannot find languages[${lang}]`);
                 return code;
             } else {
                 return `<div class='language-${lang}'>${Prism.highlight(code, Prism.languages[lang])}</div>`;

@@ -7,7 +7,9 @@ timestamp: 1428577377894
 
 ```.css
 
-a {position: relative;}
+a {
+    position: relative;
+}
 
 a::before {
     content: "";

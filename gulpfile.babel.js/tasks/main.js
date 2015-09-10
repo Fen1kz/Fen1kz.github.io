@@ -9,10 +9,10 @@ export default function (gulp, $, config) {
     let dirs = config.dirs;
     let globs = config.globs;
 
-    gulp.task('raw'), () => {
+    gulp.task('raw', () => {
         return gulp.src(globs.raw)
             .pipe(gulp.dest(dirs.dist))
-    };
+    });
 
     gulp.task('scripts', () => {
         return browserify({debug: true})

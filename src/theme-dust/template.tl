@@ -5,8 +5,8 @@
     <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>-->
     <title>{file.meta.title}</title><!-- Compiled and minified CSS -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="/css/vendor.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/css/materialize.min.css">
     <link rel="stylesheet" href="/css/style.min.css">
     <!-- Compiled and minified JavaScript -->
     <script src="/js/vendor.min.js"></script>
@@ -37,7 +37,7 @@
         </div>
             {+content}
             <div class="row">
-                <h2>{?file.meta.header}{file.meta.header|s}{:else}{file.meta.title|s}{/file.meta.header}</h2>
+                <h1>{?file.meta.header}{file.meta.header|s}{:else}{file.meta.title|s}{/file.meta.header}</h1>
 
                 <div>{file.contents|s}</div>
             </div>
