@@ -20,10 +20,10 @@ let dustHelpers = require('./dust-helpers');
 
 const PLUGIN_NAME = 'gulp-template';
 
-let log = (msg) => gutil.log(gutil.colors.cyan('gulp-insert-to-template'), msg);
-let warn = (msg) => gutil.log(gutil.colors.yellow('gulp-insert-to-template'), msg);
+let log = (msg) => gutil.log(gutil.colors.cyan('fghio-insert-to-template'), msg);
+let warn = (msg) => gutil.log(gutil.colors.yellow('fghio-insert-to-template'), msg);
 
-function gulpPrefixer(options) {
+function fghioInsertToTemplate(options) {
     log('start');
     options = options || {};
 
@@ -108,4 +108,4 @@ function gulpPrefixer(options) {
 
 
 // exporting the plugin main function
-export default gulpPrefixer;
+export default fghioInsertToTemplate;

@@ -12,10 +12,14 @@ let warn = (msg) => gutil.log(gutil.colors.yellow('gulp-content'), msg);
 export default (gulp, $, config) => {
     let dirs = config.dirs;
     let globs = config.globs;
-    let insert2Template = require('./../lib/gulp-insert-to-template');
-    let fghioCollections = require('./../lib/gulp-fghio-collections');
-    let readMetadata = require('./../lib/gulp-read-metadata');
-    let globalMetadata;
+    let insert2Template = require('./../lib/fghio-insert-to-template');
+    let fghioCollections = require('./../lib/fghio-collections');
+    let readMetadata = require('./../lib/fghio-read-metadata');
+    let readGlobalMetadata = require('./../lib/fghio-read-global-metadata');
+    let globalMetadata = {
+        tags: {}
+        , collections: {}
+    };
 
     let writeMetadata = () => (throughPipes((readable) => (readable
             .pipe(readMetadata())
@@ -63,64 +67,6 @@ export default (gulp, $, config) => {
             .pipe($.if((file) => file.data.changed, gulp.dest(dirs.src)))
     )));
 
-    let collectionsMap = {
-        posts: [/^posts$/]
-        , self: [/^self$/]
-    };
-
-    let readGlobalMetadata = () => (throughPipes((readable) => {
-            globalMetadata = {
-                tags: {}
-                , collections: {}
-            };
-            _.forIn(collectionsMap, (v, k) => {
-                globalMetadata.collections[k] = [];
-            });
-            return readable
-                .pipe($.frontMatter({
-                    property: ''
-                }))
-                .pipe($.tap((file, t) => {
-                    let meta = file.data.file.meta;
-                    let fileUrl = gutil.replaceExtension(file.relative, '.html').replace('\\', '/');
-                    //console.log('meta:', meta);
-                    //console.log('base:', $path.dirname(file.relative));
-                    if (meta.tags) {
-                        meta.tags.split(',').map((metaTag) => {
-                            let tag = _.chain(metaTag).trim().kebabCase().value();
-                            if (!globalMetadata.tags[tag]) {
-                                globalMetadata.tags[tag] = [];
-                            }
-                            globalMetadata.tags[tag].push({
-                                href: fileUrl
-                                , meta: meta
-                            });
-                            globalMetadata.tags[tag] = globalMetadata.tags[tag].sort((item1, item2) => item1.meta.timestamp < item2.meta.timestamp ? 1 : -1);
-                        });
-                    }
-
-                    let base = $path.dirname(file.relative);
-                    _.forIn(collectionsMap, (basePatterns, collectionName) => {
-                        _.forEach(basePatterns, (basePattern) => {
-                            if (basePattern.test(base)) {
-                                globalMetadata.collections[collectionName].push({
-                                    href: fileUrl
-                                    , meta: meta
-                                });
-                            }
-                        });
-                        //console.log(globalMetadata.collections[collectionName].map(item => item.meta.title + ':' + item.meta.timestamp))
-                        globalMetadata.collections[collectionName] = globalMetadata.collections[collectionName].sort((item1, item2) => item1.meta.timestamp < item2.meta.timestamp ? 1 : -1);
-                        //console.log(globalMetadata.collections[collectionName].map(item => item.meta.title + ':' + item.meta.timestamp))
-                    });
-                    //console.log(file.path, 'metadata collection complete')
-                }))
-                .on('end', () => {
-                    console.log('root:', globalMetadata);
-                })
-        }
-    ));
-
     let insertAndPlace = () => (throughPipes((readable) => (readable
             .pipe(insert2Template({
                 data: {
@@ -138,7 +84,7 @@ export default (gulp, $, config) => {
             , gulp.src(globs.root, {base: './root'})
                 .pipe(writeMetadata())
         )
-            .pipe(readGlobalMetadata());
+            .pipe(readGlobalMetadata($, globalMetadata));
     });
 
     gulp.task('collections:collections', ['meta:read'], () => {

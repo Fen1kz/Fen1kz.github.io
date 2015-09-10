@@ -4,14 +4,22 @@ template: raw
 timestamp: 1441677490858
 breadcrumbs:
 ---
-<div class="feed feed-posts">
-    <div class="feed-post">
-        <div class="content">
-            good index!
+<div>Sup!</div>
+<h1>Latest posts:</h1>
 
-            <div class="chip z-depth-1">
-                <a href="#">Tag</a>
+{global.collections|js}
+
+<div class="collection">
+    {@loop:global.collections.posts}
+        <div class="z-depth-1 padding">
+            {value|js}
+            <h3><a href="/{value.href}">{value.meta.title}</a></h3>
+
+                {!<a class="collection-item" href="/{value.href}">!}
+                    {!<span class="collection-post-text">{value.meta.title}</span>!}
+                    {!<span class="font-size-85 grey-text">@<span class="timestamp-to-date">{value.meta.timestamp}</span></span>!}
+                {!</a>!}
+            <div>{value.content}</div>
             </div>
-        </div>
-    </div>
+    {/loop}
 </div>
