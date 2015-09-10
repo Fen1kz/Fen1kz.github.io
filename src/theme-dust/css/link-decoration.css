@@ -1,13 +1,6 @@
----
-title: Cool Link Decoration Effect
-category: snippet
-tags: css, design, style
-timestamp: 1428577377894
----
-
-```.css
-
-a {position: relative;}
+a {
+    position: relative;
+}
 
 a::before {
     content: "";
@@ -28,5 +21,3 @@ a:hover::before {
     visibility: visible;
     transform: scaleX(1);
 }
-```
->src: http://notes.iissnan.com/
