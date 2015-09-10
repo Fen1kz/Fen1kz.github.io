@@ -21,7 +21,7 @@ module.exports = {
                 logger.warn('markdown', `cannot find languages[${lang}]`)
                 return code;
             } else {
-                return `<pre class='language-${lang}'>${Prism.highlight(code, Prism.languages[lang])}</pre>`;
+                return `<div class='language-${lang}'>${Prism.highlight(code, Prism.languages[lang])}</div>`;
                 //return Prism.highlight(code, Prism.languages[lang]);
             }
         }

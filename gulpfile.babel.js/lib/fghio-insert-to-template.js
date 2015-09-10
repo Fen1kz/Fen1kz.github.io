@@ -1,6 +1,6 @@
 let through = require('through2');
 let gutil = require('gulp-util');
-let dust = require('dustjs-linkedin');
+let dust = require('dustjs-helpers');
 let util = require('util');
 let glob = require('glob');
 let _ = require("lodash");

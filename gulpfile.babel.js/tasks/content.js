@@ -47,8 +47,10 @@ export default (gulp, $, config) => {
                 }
                 meta.title = _.startCase(meta.title);
 
+                console.log(changed, meta);
+
                 let metadataToWrite = _.map(meta, (value, key) => {
-                    return (_.startsWith(key, '$')
+                    return (!_.startsWith(key, '$')
                         ? `${key}: ${value}`
                         : null);
                 }).filter((item) => item !== null).join('\n');
@@ -77,40 +79,18 @@ export default (gulp, $, config) => {
             .pipe(gulp.dest(dirs.dist))
     )));
 
+
     gulp.task('meta:read', () => {
         return eventStream.merge(
             gulp.src(globs.md)
                 .pipe(writeMetadata())
+                .pipe($.extReplace('.md'))
+                .pipe($.markdown(config.pluginOptions.markdown))
             , gulp.src(globs.root, {base: './root'})
                 .pipe(writeMetadata())
         )
             .pipe(readGlobalMetadata($, globalMetadata));
     });
-
-    gulp.task('collections:collections', ['meta:read'], () => {
-        return fghioCollections({
-            name: 'collections'
-            , data: globalMetadata
-            , directory: ''
-            , templates: {
-                main: './helpers/fhgio-collections/collections-main.html'
-                , sub: './helpers/fhgio-collections/collections-sub.html'
-            }
-        }).pipe(insertAndPlace());
-    });
-
-    gulp.task('collections:tags', ['meta:read'], () => {
-        return fghioCollections({
-            name: 'tags'
-            , data: globalMetadata
-            , templates: {
-                main: './helpers/fhgio-collections/tags-main.html'
-                , sub: './helpers/fhgio-collections/tags-sub.html'
-            }
-        }).pipe(insertAndPlace());
-    });
-
-    gulp.task('collections', ['collections:collections', 'collections:tags']);
 
     gulp.task('content', ['meta:read'], () => {
         return eventStream.merge(
@@ -122,4 +102,31 @@ export default (gulp, $, config) => {
                 .pipe(readMetadata())
         ).pipe(insertAndPlace());
     });
+
+    gulp.task('collections', ['collections:collections', 'collections:tags']);
+    {
+        gulp.task('collections:collections', ['meta:read'], () => {
+            return fghioCollections({
+                name: 'collections'
+                , data: globalMetadata
+                , directory: ''
+                , templates: {
+                    main: './helpers/fhgio-collections/collections-main.html'
+                    , sub: './helpers/fhgio-collections/collections-sub.html'
+                }
+            }).pipe(insertAndPlace());
+        });
+
+        gulp.task('collections:tags', ['meta:read'], () => {
+            return fghioCollections({
+                name: 'tags'
+                , data: globalMetadata
+                , templates: {
+                    main: './helpers/fhgio-collections/tags-main.html'
+                    , sub: './helpers/fhgio-collections/tags-sub.html'
+                }
+            }).pipe(insertAndPlace());
+        });
+    }
+
 }

@@ -13,7 +13,7 @@ let readGlobalMetadata = ($, globalMetadata) => (throughPipes((readable) => {
         });
         return readable
             .pipe($.frontMatter({
-                property: ''
+                property: 'global-metadata-junk'
             }))
             .pipe($.tap((file, t) => {
                 let meta = file.data.file.meta;

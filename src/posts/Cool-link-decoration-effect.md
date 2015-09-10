@@ -5,14 +5,7 @@ tags: css, design, style
 timestamp: 1428577377894
 ---
 
-```.ruby
-
-def index puts "hello world" end
-
-``` 
-
 ```.css
-
 .posts-expand .post-title-link::before {
   content: "";
   position: absolute;
@@ -31,7 +24,5 @@ def index puts "hello world" end
   visibility: visible;
   transform: scaleX(1);
 }
-
 ```
-
-src: http://notes.iissnan.com/
+>src: http://notes.iissnan.com/
