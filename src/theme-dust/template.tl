@@ -39,7 +39,7 @@
         </div>
         {+content}
             <div class="row">
-                <h1>{?file.meta.header}{file.meta.header|s}{:else}{file.meta.title|s}{/file.meta.header}</h1>
+                <h1>{^file.meta.header}{file.meta.title|s}{:else}{file.meta.header|s}{/file.meta.header}</h1>
 
                 <div>{file.contents|s}</div>
             </div>

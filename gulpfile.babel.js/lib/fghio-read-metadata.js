@@ -16,7 +16,7 @@ let readBreadcrumbs = (options) => (
         });
         let makeLink = (link, text) => `<a href='/${link}'>${text}</a>`;
         let basenameOf = (item) => $path.basename(item, $path.extname(item));
-        let meta = file.data.file.meta
+        let meta = file.data.file.meta;
 
         let breadcrumbsArray = (meta.breadcrumbs
             ? meta.breadcrumbs.split('/')
@@ -52,6 +52,9 @@ let readBreadcrumbs = (options) => (
     }));
 
 let readMetadata = () => (throughPipes((readable) => (readable
+        //.pipe($.tap((file) => {
+        //    console.log(file, file.metadata);
+        //}))
         .pipe($.frontMatter({
             property: 'metadata'
         }))

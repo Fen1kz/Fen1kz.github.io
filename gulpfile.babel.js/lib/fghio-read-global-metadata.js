@@ -24,7 +24,7 @@ let readGlobalMetadata = ($, globalMetadata) => (throughPipes((readable) => {
                     meta.tags.split(',').map((metaTag) => {
                         let tagName = _.chain(metaTag).trim().kebabCase().value();
                         let tag = _.find(globalMetadata.tags, 'name', tagName);
-                        console.log(`searched for ${tagName}, found ${!(tag === void 0)}`);
+                        //console.log(`searched for ${tagName}, found ${!(tag === void 0)}`);
                         if (!tag) {
                             tag = {name: tagName, files: []};
                             globalMetadata.tags.push(tag);

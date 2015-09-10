@@ -4,7 +4,7 @@ let $ = {
     tap: require('gulp-tap')
     , util: require('gulp-util')
     , file: require('gulp-file')
-    , frontMatter: require('gulp-front-matter')
+    //, frontMatter: require('gulp-front-matter')
 };
 let through2 = require('through2');
 let eventStream = require('event-stream');
@@ -37,7 +37,7 @@ function fghioCollections(options) {
 
             let collectionArray = _.map(collection, (item, index) => {
                 let itemIndex = index;
-                let itemName = item.key;
+                let itemName = item.name;
                 let itemValue = item.files;
                 return $.file(`${directory}${itemName}/index.tl`, subTemplate({
                     collectionName: collectionName
