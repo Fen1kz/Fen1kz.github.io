@@ -7,7 +7,7 @@ title: <%= CollectionName %>
 <div>
     {@loop:global.<%= collectionName %>}
     <div class="chip z-index-1">
-        <a class="collection-item" href="/<%= collectionName %>/{key}">{key} ({value.length})</a>
+        <a class="collection-item" href="/<%= collectionName %>/{value.name}">{value.name} ({value.files.length})</a>
     </div>
     {/loop}
 </div>

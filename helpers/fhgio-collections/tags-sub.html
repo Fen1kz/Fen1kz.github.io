@@ -8,7 +8,7 @@ header: <a href="/<%= collectionName %>/"><%= collectionName %></a>/<%= itemName
 <!--<div class="z-depth-1 padding">-->
 <div>
     <div class="collection">
-        {@loop:global.<%= collectionName %>.<%= itemName %>}
+        {@loop:global.<%= collectionName %>[<%= itemIndex %>].files}
         <a class="collection-item" href="/{value.href}">
             <span class="collection-post-text">{value.meta.title}</span>
             <span class="font-size-85 grey-text">@<span class="timestamp-to-date">{value.meta.timestamp}</span></span>

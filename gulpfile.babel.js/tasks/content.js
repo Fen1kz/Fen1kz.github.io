@@ -17,8 +17,10 @@ export default (gulp, $, config) => {
     let readMetadata = require('./../lib/fghio-read-metadata');
     let readGlobalMetadata = require('./../lib/fghio-read-global-metadata');
     let globalMetadata = {
-        tags: {}
-        , collections: {}
+        tags: []
+        , collections: []
+        , getCollectionByName: (name) => _.find(globalMetadata.collections, 'name', name)
+        //, get indexCollection () {return _.find(globalMetadata.collections, 'name', 'posts')}
     };
 
     let writeMetadata = () => (throughPipes((readable) => (readable

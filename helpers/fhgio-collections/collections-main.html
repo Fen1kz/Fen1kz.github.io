@@ -6,13 +6,13 @@ title: <%= CollectionName %>
 <div>
     {@loop:global.<%= collectionName %>}
     <!--<div class="z-depth-1 padding col-12">-->
-    <h4><a href="/<%= directory %>{key}">{@startCase:key/}</a></h4>
+    <h4><a href="/<%= directory %>{value.name}">{@startCase:value.name/}</a></h4>
 
     <div class="collection">
-        {@loop:value}
-        <a class="collection-item" href="/{value.href}">
-            <span class="collection-post-text">{value.meta.title}</span>
-            <span class="font-size-85 grey-text">@<span class="timestamp-to-date">{value.meta.timestamp}</span></span>
+        {@loop:value.files value="file"}
+        <a class="collection-item" href="/{file.href}">
+            <span class="collection-post-text">{file.meta.title}</span>
+            <span class="font-size-85 grey-text">@<span class="timestamp-to-date">{file.meta.timestamp}</span></span>
         </a>
         {/loop}
     </div>

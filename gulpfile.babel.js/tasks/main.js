@@ -30,6 +30,7 @@ export default function (gulp, $, config) {
     gulp.task('styles', () => {
         return gulp.src(globs.styles)
             .pipe($.sourcemaps.init())
+            .pipe($.if('*.scss', $.sass().on('error', $.sass.logError)))
             .pipe($.concat('style.min.css'))
             .pipe($.minifyCss())
             .pipe($.sourcemaps.write())

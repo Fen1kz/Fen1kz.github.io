@@ -3,9 +3,12 @@ let dust = require('dustjs-helpers');
 let htmlTruncate = require('html-truncate');
 
 export default {
-    loop: (chunk, ctx, bodies) => {
+    loop: (chunk, ctx, bodies, params) => {
+        let keyName = dust.helpers.tap(params.key, chunk, ctx) || 'key';
+        let valueName = dust.helpers.tap(params.value, chunk, ctx) || 'value';
+
         _.forIn(ctx.current(), (value, key) => {
-            chunk = chunk.render(bodies.block, ctx.push({key: key, value: value}));
+            chunk = chunk.render(bodies.block, ctx.push({[keyName]: key, [valueName]: value}));
         });
         return chunk;
     }

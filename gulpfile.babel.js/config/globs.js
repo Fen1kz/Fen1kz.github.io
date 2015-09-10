@@ -22,7 +22,7 @@ var globs = {
 globs = Object.assign(globs, {
     md: [globs.src + '.{md,txt}', `!${dirs.src}/_raw/**/*`]
     , theme: dirs.src + '/theme-dust/**/*.tl'
-    , styles: dirs.src + '/theme-dust/css/**/*.css'
+    , styles: dirs.src + '/theme-dust/css/**/*.{css,scss}'
 });
 
 module.exports = globs;

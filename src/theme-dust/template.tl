@@ -16,9 +16,11 @@
 <body>
 <nav>
     <div class="nav-wrapper container">
-        <a href="/" class="brand-logo">Lavasystems Corp.</a>
-        <a href="#" data-activates="root-side-nav" class="side-nav-btn right hide-on-large-only">
-            <i class="material-icons">menu</i></a>
+        <a href="/" class="logo">Lavasystems Corp.</a>
+        <div class="valign-wrapper right height-100p">
+            <a href="#" data-activates="root-side-nav" class="side-nav-btn right hide-on-large-only valign">
+                <i class="material-icons">menu</i></a>
+        </div>
         <ul class="right hide-on-med-and-down">
             <li><a href="/tags">Tags</a></li>
             <li><a href="/collections">Collections</a></li>
@@ -33,15 +35,15 @@
     {+body}
         <div class="row padding">
             <div class="col s6">{file.breadcrumbs|s}</div>
-            <div class="col s6 timestamp-to-date">{file.meta.timestamp}</div>
+            <div class="col s6 timestamp-to-date font-size-85">{file.meta.timestamp}</div>
         </div>
-            {+content}
+        {+content}
             <div class="row">
                 <h1>{?file.meta.header}{file.meta.header|s}{:else}{file.meta.title|s}{/file.meta.header}</h1>
 
                 <div>{file.contents|s}</div>
             </div>
-            {/content}
+        {/content}
     {/body}
 </div>
 </body>

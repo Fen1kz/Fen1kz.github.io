@@ -35,12 +35,16 @@ function fghioCollections(options) {
             }), {src: true})
                 .pipe(readMetadata());
 
-            let collectionArray = _.map(collection, (itemValue, itemName) => {
+            let collectionArray = _.map(collection, (item, index) => {
+                let itemIndex = index;
+                let itemName = item.key;
+                let itemValue = item.files;
                 return $.file(`${directory}${itemName}/index.tl`, subTemplate({
                     collectionName: collectionName
                     , CollectionName: _.startCase(collectionName)
                     , itemName: itemName
                     , ItemName: _.startCase(itemName)
+                    , itemIndex: itemIndex
                 }), {src: true})
                     //.pipe($.tap(file => {
                     //    console.log('path', file.path);

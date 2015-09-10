@@ -7,7 +7,7 @@
 
 // Variables;
 //@import "components/variables";
-@import "custom_variables";
+@import "_custom_variables";
 
 // Reset
 @import "components/normalize";
@@ -18,7 +18,8 @@
 @import "components/grid";
 @import "components/navbar";
 @import "components/roboto";
-@import "components/typography";
+//@import "components/typography";
+@import "_custom_typography";
 @import "components/cards";
 @import "components/toast";
 @import "components/tabs";

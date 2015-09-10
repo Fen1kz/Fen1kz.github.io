@@ -22,23 +22,32 @@ let readGlobalMetadata = ($, globalMetadata) => (throughPipes((readable) => {
                 //console.log('base:', $path.dirname(file.relative));
                 if (meta.tags) {
                     meta.tags.split(',').map((metaTag) => {
-                        let tag = _.chain(metaTag).trim().kebabCase().value();
-                        if (!globalMetadata.tags[tag]) {
-                            globalMetadata.tags[tag] = [];
+                        let tagName = _.chain(metaTag).trim().kebabCase().value();
+                        let tag = _.find(globalMetadata.tags, 'name', tagName);
+                        console.log(`searched for ${tagName}, found ${!(tag === void 0)}`);
+                        if (!tag) {
+                            tag = {name: tagName, files: []};
+                            globalMetadata.tags.push(tag);
                         }
-                        globalMetadata.tags[tag].push({
+                        tag.files.push({
                             href: fileUrl
                             , meta: meta
                         });
-                        globalMetadata.tags[tag] = globalMetadata.tags[tag].sort((item1, item2) => item1.meta.timestamp < item2.meta.timestamp ? 1 : -1);
+                        tag.files.sort((item1, item2) => item1.meta.timestamp < item2.meta.timestamp ? 1 : -1);
                     });
+                    globalMetadata.tags.sort((item1, item2) => item1.files.length < item2.files.length ? 1 : -1);
                 }
 
                 let base = $path.dirname(file.relative);
                 _.forIn(collectionsMap, (basePatterns, collectionName) => {
+                    let collection = globalMetadata.getCollectionByName(collectionName);
+                    if (!collection) {
+                        collection = {name: collectionName, files: []};
+                        globalMetadata.collections.push(collection);
+                    }
                     _.forEach(basePatterns, (basePattern) => {
                         if (basePattern.test(base)) {
-                            globalMetadata.collections[collectionName].push({
+                            collection.files.push({
                                 href: fileUrl
                                 , meta: meta
                                 , content: file.contents.toString()
@@ -46,7 +55,7 @@ let readGlobalMetadata = ($, globalMetadata) => (throughPipes((readable) => {
                         }
                     });
                     //console.log(globalMetadata.collections[collectionName].map(item => item.meta.title + ':' + item.meta.timestamp))
-                    globalMetadata.collections[collectionName] = globalMetadata.collections[collectionName].sort((item1, item2) => item1.meta.timestamp < item2.meta.timestamp ? 1 : -1);
+                    collection.files.sort((item1, item2) => item1.meta.timestamp < item2.meta.timestamp ? 1 : -1);
                     //console.log(globalMetadata.collections[collectionName].map(item => item.meta.title + ':' + item.meta.timestamp))
                 });
                 //console.log(file.path, 'metadata collection complete')

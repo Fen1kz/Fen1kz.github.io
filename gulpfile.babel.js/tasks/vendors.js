@@ -1,5 +1,4 @@
 let eventStream = require('event-stream');
-let sass = require('gulp-sass');
 
 export default function (gulp, $, config) {
     let dirs = config.dirs;
@@ -8,8 +7,7 @@ export default function (gulp, $, config) {
     let vendors = {
         js: ['node_modules/jquery/dist/jquery.min.js'
             , 'node_modules/moment/min/moment.min.js']
-        , css: ['node_modules/prismjs/dist/prism-default/prism-default.css'
-            , 'lib/materialize-src/sass/materialize.scss']
+        , css: ['node_modules/prismjs/dist/prism-default/prism-default.css']
     };
 
     gulp.task('vendor:js', () => {
@@ -22,7 +20,7 @@ export default function (gulp, $, config) {
     gulp.task('vendor:css', () => {
         return gulp.src(vendors.css)
             .pipe($.expectFile(vendors.css))
-            .pipe($.if('*.scss', sass().on('error', sass.logError)))
+            .pipe($.if('*.scss', $.sass().on('error', $.sass.logError)))
             .pipe($.concat('vendor.min.css'))
             .pipe(gulp.dest(dirs.dist$.styles))
     });
