@@ -5,8 +5,8 @@
     <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>-->
     <title>Home</title><!-- Compiled and minified CSS -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="/css/vendor.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/css/materialize.min.css">
     <link rel="stylesheet" href="/css/style.min.css">
     <!-- Compiled and minified JavaScript -->
     <script src="/js/vendor.min.js"></script>
@@ -16,9 +16,11 @@
 <body>
 <nav>
     <div class="nav-wrapper container">
-        <a href="/" class="brand-logo">Lavasystems Corp.</a>
-        <a href="#" data-activates="root-side-nav" class="side-nav-btn right hide-on-large-only">
-            <i class="material-icons">menu</i></a>
+        <a href="/" class="logo">Lavasystems Corp.</a>
+        <div class="valign-wrapper right height-100p">
+            <a href="#" data-activates="root-side-nav" class="side-nav-btn right hide-on-large-only valign">
+                <i class="material-icons">menu</i></a>
+        </div>
         <ul class="right hide-on-med-and-down">
             <li><a href="/tags">Tags</a></li>
             <li><a href="/collections">Collections</a></li>
@@ -32,21 +34,98 @@
 <div class="container">
     
         <div class="row padding">
-            <div class="col s6"><a href='/'>/root</a></div>
-            <div class="col s6 timestamp-to-date">1441677490858</div>
+            <div class="col s6"><a href='/'>/root</a><span> / </span><strong>Home</strong></div>
+            <div class="col s6 timestamp-to-date font-size-85">1441677490858</div>
         </div>
-            
+        
     <div class="row">
-        <div class="feed feed-posts">
-    <div class="feed-post">
-        <div class="content">
-            good index!
+        <div>Sup!</div>
+<h2>Latest posts:</h2>
+<div class="collection">
+    
+        <div class="z-depth-1 padding">
+            <h3><a href="/posts/post3.html">Post 3</a></h3>
+            <a class="collection-item" href="/posts/post3.html">
+                <span class="collection-post-text">Post 3</span>
+                <span class="font-size-85 grey-text">@<span
+                        class="timestamp-to-date">1441889125498</span></span>
+            </a>
 
-            <div class="chip z-depth-1">
-                <a href="#">Tag</a>
-            </div>
+            <div><p>post3</p>
+</div>
         </div>
-    </div>
+    
+        <div class="z-depth-1 padding">
+            <h3><a href="/posts/post2.html">Post 2</a></h3>
+            <a class="collection-item" href="/posts/post2.html">
+                <span class="collection-post-text">Post 2</span>
+                <span class="font-size-85 grey-text">@<span
+                        class="timestamp-to-date">1441889125493</span></span>
+            </a>
+
+            <div><p>post2</p>
+</div>
+        </div>
+    
+        <div class="z-depth-1 padding">
+            <h3><a href="/posts/post1.html">Post 1</a></h3>
+            <a class="collection-item" href="/posts/post1.html">
+                <span class="collection-post-text">Post 1</span>
+                <span class="font-size-85 grey-text">@<span
+                        class="timestamp-to-date">1441889125453</span></span>
+            </a>
+
+            <div><p>post1</p>
+</div>
+        </div>
+    
+        <div class="z-depth-1 padding">
+            <h3><a href="/posts/test-post.html">Test Post</a></h3>
+            <a class="collection-item" href="/posts/test-post.html">
+                <span class="collection-post-text">Test Post</span>
+                <span class="font-size-85 grey-text">@<span
+                        class="timestamp-to-date">1441802317563</span></span>
+            </a>
+
+            <div><p>second post</p>
+</div>
+        </div>
+    
+        <div class="z-depth-1 padding">
+            <h3><a href="/posts/test-post-2.html">Test Post 2</a></h3>
+            <a class="collection-item" href="/posts/test-post-2.html">
+                <span class="collection-post-text">Test Post 2</span>
+                <span class="font-size-85 grey-text">@<span
+                        class="timestamp-to-date">1441669123071</span></span>
+            </a>
+
+            <div><p>test post 2 {file.meta.title} heh</p>
+</div>
+        </div>
+    
+        <div class="z-depth-1 padding">
+            <h3><a href="/posts/Cool-link-decoration-effect.html">Cool Link Decoration Effect</a></h3>
+            <a class="collection-item" href="/posts/Cool-link-decoration-effect.html">
+                <span class="collection-post-text">Cool Link Decoration Effect</span>
+                <span class="font-size-85 grey-text">@<span
+                        class="timestamp-to-date">1428577377894</span></span>
+            </a>
+
+            <div><pre><code class="language-css"><div class='language-css'>
+<span class="token selector" >a </span><span class="token punctuation" >{</span>
+    <span class="token property" >position</span><span class="token punctuation" >:</span> relative<span class="token punctuation" >;</span>
+<span class="token punctuation" >}</span>
+
+<span class="token selector" >a::before </span><span class="token punctuation" >{</span>
+    <span class="token property" >content</span><span class="token punctuation" >:</span> <span class="token string" >""</span><span class="token punctuation" >;</span>
+    <span class="token property" >position</span><span class="token punctuation" >:</span> absolute<span class="token punctuation" >;</span>
+    <span class="token property" >width</span><span class="token punctuation" >:</span> 100%<span class="token punctuation" >;</span>
+    <span class="token property" >height</span><span class="token punctuation" >:</span> 2px<span class="token punctuation" >;</span>
+    <span class="token property" >bottom</span><span class="token punctuation" >:</span> 0<span class="token punctuation" >;</span>
+    <span class="token property" >left</span><span class="token punctuation" >:</span> 0<span class="token punctuation" >;</span>
+    <span class="token property" >background-color</span><span class="token punctuation" >:</span> curre...</code></pre><div><a href="/posts/Cool-link-decoration-effect.html">Read more</a></div></div>
+        </div>
+    
 </div>
     </div>
 
