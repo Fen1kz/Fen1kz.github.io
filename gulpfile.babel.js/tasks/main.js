@@ -45,8 +45,8 @@ export default function (gulp, $, config) {
         return gulp.src('./site/**/*.*')
             .pipe($.ghPages({
                 branch: 'master'
-                , force: true
-                , push: true
+                //, force: true
+                //, push: true
             }));
     });
 
