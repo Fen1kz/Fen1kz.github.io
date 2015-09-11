@@ -1,5 +1,3 @@
-let rimraf = require('rimraf');
-
 export default function (gulp, $, config, helpers) {
     let dirs = config.dirs;
     let globs = config.globs;

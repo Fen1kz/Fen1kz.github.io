@@ -1,4 +1,3 @@
-let rimraf = require('rimraf');
 let throughPipes = require('through-pipes');
 
 export default function (gulp, $, config) {

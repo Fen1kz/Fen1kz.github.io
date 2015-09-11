@@ -1,8 +1,8 @@
 ---
-title: Home
 template: raw
 timestamp: 1441677490858
-breadcrumbs: lol
+breadcrumbs: null
+title: root
 ---
 <div>Sup!</div>
 <h2>Latest posts:</h2>

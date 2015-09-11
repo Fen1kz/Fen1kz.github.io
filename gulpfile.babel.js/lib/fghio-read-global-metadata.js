@@ -4,21 +4,32 @@ let $path = require('path');
 
 let collectionsMap = {
     posts: [/^posts$/]
-    , self: [/^self$/]
+    , notes: [/^self$/]
+    , articles: [/^articles$/]
 };
 
-let readGlobalMetadata = ($, globalMetadata) => (throughPipes((readable) => {
+let globalMetadata = {
+    tags: []
+    , collections: []
+    , getCollectionByName: (name) => _.find(globalMetadata.collections, 'name', name)
+    , get indexCollection() {
+        return _.find(globalMetadata.collections, 'name', 'posts')
+    }
+};
+
+let debug = (true) ? console.log : () => (void 0);
+
+let readGlobalMetadata = ($) => (throughPipes((readable) => {
         _.forIn(collectionsMap, (v, k) => {
             globalMetadata.collections[k] = [];
         });
+        debug('----- read-global-metadata -----');
         return readable
-            .pipe($.frontMatter({
-                property: 'global-metadata-junk'
-            }))
             .pipe($.tap((file, t) => {
                 let meta = file.data.file.meta;
                 let fileUrl = $.util.replaceExtension(file.relative, '.html').replace('\\', '/');
-                //console.log('meta:', meta);
+                debug('file:', file.relative);
+                debug('meta:', meta);
                 //console.log('base:', $path.dirname(file.relative));
                 if (meta.tags) {
                     meta.tags.split(',').map((metaTag) => {
@@ -61,9 +72,15 @@ let readGlobalMetadata = ($, globalMetadata) => (throughPipes((readable) => {
                 //console.log(file.path, 'metadata collection complete')
             }))
             .on('end', () => {
-                console.log('root:', globalMetadata);
+                console.log(globalMetadata);
+                debug('----- end read-global-metadata -----');
             })
     }
 ));
 
-export default readGlobalMetadata;
+let exportObject = {
+    fn: readGlobalMetadata
+    , obj: globalMetadata
+};
+
+export default exportObject;
