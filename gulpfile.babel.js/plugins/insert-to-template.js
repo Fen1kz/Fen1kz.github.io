@@ -14,7 +14,7 @@ let dustHelpers = require('./../lib/dust-helpers');
 const PLUGIN_NAME = 'insert-to-template';
 
 export default (gulp, $, config) => {
-    let logger = $.log.getLogger(PLUGIN_NAME);
+    let logger = $.getLogger(PLUGIN_NAME);
     return (options) => {
         logger.log('start');
 

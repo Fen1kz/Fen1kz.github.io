@@ -8,7 +8,7 @@ let $ = {
 };
 let through2 = require('through2');
 let eventStream = require('event-stream');
-let readMetadata = require('./fghio-read-metadata');
+let readMetadata = require('./../plugins/fghio-read-metadata');
 
 let log = (msg) => $.util.log($.util.colors.cyan('fghioCollections'), msg);
 
