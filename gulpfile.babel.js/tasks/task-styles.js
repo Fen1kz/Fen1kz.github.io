@@ -11,21 +11,21 @@ export default function (gulp, $, config) {
             .pipe($.sourcemaps.write())
     )));
 
-    gulp.task('style:local', () => {
-        return gulp.src(globs.src.style.local)
+    gulp.task('styles:local', () => {
+        return gulp.src(globs.src.styles.local)
             .pipe(compileMinify())
             .pipe($.concat('style.min.css'))
             .pipe(gulp.dest(`${dirs.dist}/css`))
     });
 
-    gulp.task('style:vendor', () => {
-        let glob = [].concat(globs.src.style.extension, globs.src.style.vendor);
+    gulp.task('styles:vendor', () => {
+        let glob = [].concat(globs.src.styles.extension, globs.src.styles.vendor);
         return gulp.src(glob)
-            .pipe($.expectFile({reportUnexpected: false}, globs.src.style.vendor))
+            .pipe($.expectFile({reportUnexpected: false}, globs.src.styles.vendor))
             .pipe(compileMinify())
             .pipe($.concat('vendor.min.css'))
             .pipe(gulp.dest(`${dirs.dist}/css`))
     });
 
-    gulp.task('style', ['style:local', 'style:vendor']);
+    gulp.task('styles', ['styles:local', 'styles:vendor']);
 }

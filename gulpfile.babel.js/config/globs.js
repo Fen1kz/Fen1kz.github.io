@@ -17,12 +17,12 @@ var globs = {
         all: [`${dirs.src}/**`]
         , root: [`${dirs.src}/root/**/*.!(js|css|scss|tl)`]
         , projects: [`${dirs.src}/projects/**`]
-        , style: {
+        , styles: {
             local: [`${dirs.src}/root/css/**/*.{css,scss}`]
             , extension: [`${dirs.src}/lib/css/*.{css,scss}`]
             , vendor: ['node_modules/prismjs/dist/prism-default/prism-default.css']
         }
-        , script: {
+        , scripts: {
             local: [`${dirs.src}/root/css/**/*.js`]
             , vendor: ['node_modules/jquery/dist/jquery.min.js'
                 , 'node_modules/moment/min/moment.min.js']

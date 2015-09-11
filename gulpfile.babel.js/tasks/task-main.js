@@ -15,11 +15,9 @@ export default function (gulp, $, config) {
             }));
     });
 
-    gulp.task('dist', $.sequence('clean:all', ['content', 'script', 'style', 'collections', 'copy']));
+    gulp.task('dist', $.sequence('clean:all', ['content', 'scripts', 'styles', 'collections', 'copy']));
 
-    gulp.task('build', ['content', 'script:local', 'style:local', 'collections', 'copy']);
-
-    gulp.task('collections');
+    gulp.task('build', ['content', 'scripts:local', 'styles:local', 'collections', 'copy']);
 
     gulp.task('watch', ['dist'], () => {
         gulp.watch([globs.src.all, globs.helpers], 'build');

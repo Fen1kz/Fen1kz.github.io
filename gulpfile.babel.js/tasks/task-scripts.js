@@ -6,7 +6,7 @@ export default function (gulp, $, config) {
     let dirs = config.dirs;
     let globs = config.globs;
 
-    gulp.task('script:local', () => {
+    gulp.task('scripts:local', () => {
         return browserify({debug: true})
             .transform(babelify)
             .require(dirs.src + '/root/js/script.js', {entry: true})
@@ -19,12 +19,12 @@ export default function (gulp, $, config) {
             .pipe(gulp.dest(`${dirs.dist}/js`));
     });
 
-    gulp.task('script:vendor', () => {
-        return gulp.src(globs.src.script.vendor)
-            .pipe($.expectFile(globs.src.script.vendor))
+    gulp.task('scripts:vendor', () => {
+        return gulp.src(globs.src.scripts.vendor)
+            .pipe($.expectFile(globs.src.scripts.vendor))
             .pipe($.concat('vendor.min.js'))
             .pipe(gulp.dest(`${dirs.dist}/js`))
     });
 
-    gulp.task('script', ['script:local', 'script:vendor']);
+    gulp.task('scripts', ['scripts:local', 'scripts:vendor']);
 }
