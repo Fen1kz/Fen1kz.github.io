@@ -6,8 +6,8 @@
     <title>{file.meta.title}</title><!-- Compiled and minified CSS -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="/css/vendor.min.css">
     <link rel="stylesheet" href="/css/style.min.css">
+    <link rel="stylesheet" href="/css/vendor.min.css">
     <!-- Compiled and minified JavaScript -->
     <script src="/js/vendor.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/js/materialize.min.js"></script>

@@ -13,16 +13,26 @@
 var dirs = require('./dirs');
 
 var globs = {
-    src: dirs.src + '/**/*'
-    , root: dirs.src + '/root/**/*'
-    , raw: dirs.src + '/_raw/**/*'
-    , helpers: './helpers/**/*'
+    src: {
+        root: `${dirs.src}/root/**/*.!(js|css|scss|tl)`
+        , projects: `${dirs.src}/projects/**`
+        , style: {
+            local: `${dirs.src}/root/css/**/*.{css,scss}`
+            , extension: [`${dirs.src}/lib/css/*.{css,scss}`]
+            , vendor: ['node_modules/prismjs/dist/prism-default/prism-default.css']
+        }
+    }
+    , dist: {
+        all: `${dirs.dist}/**/*`
+        , content: ``
+    }
+    //src: {`${dirs.src}/**/*`
+    //, src: dirs.src + '/root/**/*'
+    //, raw: dirs.src + '/_raw/**/*'
+    //, helpers: './helpers/**/*'
+    //, md: [globs.src + '.{md,txt}', `!${dirs.src}/_raw/**/*`]
+    //, theme: dirs.src + '/theme-dust/**/*.tl'
+    //, styles: dirs.src + '/theme-dust/css/**/*.{css,scss}'
 };
-
-globs = Object.assign(globs, {
-    md: [globs.src + '.{md,txt}', `!${dirs.src}/_raw/**/*`]
-    , theme: dirs.src + '/theme-dust/**/*.tl'
-    , styles: dirs.src + '/theme-dust/css/**/*.{css,scss}'
-});
 
 module.exports = globs;
