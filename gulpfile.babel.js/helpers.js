@@ -8,7 +8,7 @@
 let _ = require('lodash');
 
 export default (gulp, $, config) => ({
-    makeAggregateTask: ((name) => gulp.task(name, _.map(gulp.tasks, (task, key) => key).filter((key) => key !== name && key.startsWith(name))))
+    $: $
     , logger: {
         log: (plugin, msg) => $.util.log($.util.colors.cyan(plugin), msg)
         , warn: (plugin, msg) => $.util.log($.util.colors.yellow(plugin), msg)

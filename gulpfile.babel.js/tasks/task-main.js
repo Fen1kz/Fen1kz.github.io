@@ -15,9 +15,13 @@ export default function (gulp, $, config) {
             }));
     });
 
-    gulp.task('build', $.sequence('clean:all', ['content', 'script', 'style', 'collections', 'copy']));
+    gulp.task('dist', $.sequence('clean:all', ['content', 'script', 'style', 'collections', 'copy']));
 
-    gulp.task('watch', ['build'], () => {
-        gulp.watch([globs.src.all, globs.helpers], ['content', 'script:local', 'style:local', 'collections']);
+    gulp.task('build', ['content', 'script:local', 'style:local', 'collections', 'copy']);
+
+    gulp.task('collections');
+
+    gulp.task('watch', ['dist'], () => {
+        gulp.watch([globs.src.all, globs.helpers], 'build');
     });
 }

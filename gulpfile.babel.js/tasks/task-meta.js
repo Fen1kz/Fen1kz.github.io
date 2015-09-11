@@ -53,7 +53,7 @@ export default (gulp, $, config) => {
             .pipe($.if((file) => file.data.changed, gulp.dest(dirs.src)))
     });
 
-    gulp.task('meta:read', 'meta:write', () => {
+    gulp.task('meta:read', ['meta:write'], () => {
         return eventStream.merge(
             gulp.src(globs.src.content.md)
                 .pipe(readMetadata())

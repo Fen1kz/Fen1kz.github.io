@@ -22,7 +22,7 @@ var globs = {
             , extension: [`${dirs.src}/lib/css/*.{css,scss}`]
             , vendor: ['node_modules/prismjs/dist/prism-default/prism-default.css']
         }
-        , scripts: {
+        , script: {
             local: [`${dirs.src}/root/css/**/*.js`]
             , vendor: ['node_modules/jquery/dist/jquery.min.js'
                 , 'node_modules/moment/min/moment.min.js']
@@ -36,12 +36,8 @@ var globs = {
         all: `${dirs.dist}/**/*`
         , content: ``
     }
-    , helpers: './helpers/**/*'
-    //src: {`${dirs.src}/**/*`
-    //, src: dirs.src + '/root/**/*'
-    //, raw: dirs.src + '/_raw/**/*'
-    //, theme: dirs.src + '/theme-dust/**/*.tl'
-    //, styles: dirs.src + '/theme-dust/css/**/*.{css,scss}'
+    , helpers: `./helpers/**/*`
+    , theme: `${dirs.src}/theme-dust/**/*.tl`
 };
 
 module.exports = globs;

@@ -12,5 +12,5 @@ export default function (gulp, $, config, helpers) {
             .pipe(gulp.dest(`${dirs.dist}/projects`))
     });
 
-    helpers.makeAggregateTask('copy');
+    gulp.task('copy', ['copy:root', 'copy:projects']);
 }
