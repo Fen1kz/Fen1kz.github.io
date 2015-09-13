@@ -3,17 +3,10 @@ let throughPipes = require('through-pipes');
 let $path = require('path');
 
 export default (gulp, $, config) => {
-
-    let collectionsMap = {
-        posts: [/^posts$/]
-        , notes: [/^self$/]
-        , articles: [/^articles$/]
-    };
-
-    let debug = (true) ? console.log : () => (void 0);
+    let debug = (false) ? console.log : () => (void 0);
     let globalMetadata = config.globalMetadata;
     return () => (throughPipes((readable) => {
-            _.forIn(collectionsMap, (v, k) => {
+            _.forIn(config.collectionsMap, (v, k) => {
                 globalMetadata.collections[k] = [];
             });
             debug('----- read-global-metadata -----');
@@ -43,13 +36,15 @@ export default (gulp, $, config) => {
                     }
 
                     let base = $path.dirname(file.relative);
-                    _.forIn(collectionsMap, (basePatterns, collectionName) => {
+                    debug('--- collections / ---');
+                    _.forIn(config.collectionsMap, (basePatterns, collectionName) => {
                         let collection = globalMetadata.getCollectionByName(collectionName);
                         if (!collection) {
                             collection = {name: collectionName, files: []};
                             globalMetadata.collections.push(collection);
                         }
                         _.forEach(basePatterns, (basePattern) => {
+                            debug('base:', basePattern.test(base), base);
                             if (basePattern.test(base)) {
                                 collection.files.push({
                                     href: fileUrl
@@ -62,6 +57,7 @@ export default (gulp, $, config) => {
                         collection.files.sort((item1, item2) => item1.meta.timestamp < item2.meta.timestamp ? 1 : -1);
                         //console.log(globalMetadata.collections[collectionName].map(item => item.meta.title + ':' + item.meta.timestamp))
                     });
+                    debug('--- / collections ---');
                     //console.log(file.path, 'metadata collection complete')
                 }))
                 .on('end', () => {

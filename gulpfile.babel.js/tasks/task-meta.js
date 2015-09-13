@@ -47,7 +47,7 @@ export default (gulp, $, config) => {
                     ]);
                 }
             }))
-            .pipe($.if((file) => file.data.changed, gulp.dest(dirs.src)))
+            .pipe($.if((file) => file.data.changed, gulp.dest(`${dirs.src}/content`)))
     });
 
     gulp.task('meta:read', ['meta:write'], () => {

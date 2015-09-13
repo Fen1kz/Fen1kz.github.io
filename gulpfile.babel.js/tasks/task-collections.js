@@ -7,29 +7,26 @@ export default (gulp, $, config) => {
     let dirs = config.dirs;
     let globs = config.globs;
     //let fghioCollections = require('./../lib/fghio-collections');
-    //gulp.task('collections:collections', ['meta:read'], () => {
-    //    return fghioCollections({
-    //        name: 'collections'
-    //        , data: globalMetadata
-    //        , directory: ''
-    //        , templates: {
-    //            main: './helpers/fhgio-collections/collections-main.html'
-    //            , sub: './helpers/fhgio-collections/collections-sub.html'
-    //        }
-    //    }).pipe(insertAndPlace());
-    //});
+    gulp.task('collections:collections', ['meta:read'], () => {
+        return $.fghioCollections({
+            name: 'collections'
+            , directory: ''
+            , templates: {
+                main: './helpers/fhgio-collections/collections-main.html'
+                , sub: './helpers/fhgio-collections/collections-sub.html'
+            }
+        }).pipe($.insertAndPlace());
+    });
 
-    //    gulp.task('collections:tags', ['meta:read'], () => {
-    //        return fghioCollections({
-    //            name: 'tags'
-    //            , data: globalMetadata
-    //            , templates: {
-    //                main: './helpers/fhgio-collections/tags-main.html'
-    //                , sub: './helpers/fhgio-collections/tags-sub.html'
-    //            }
-    //        }).pipe(insertAndPlace());
-    //    });
+    gulp.task('collections:tags', ['meta:read'], () => {
+        return $.fghioCollections({
+            name: 'tags'
+            , templates: {
+                main: './helpers/fhgio-collections/tags-main.html'
+                , sub: './helpers/fhgio-collections/tags-sub.html'
+            }
+        }).pipe($.insertAndPlace());
+    });
 
-    //gulp.task('collections', ['collections:collections', 'collections:tags']);
-    gulp.task('collections');
+    gulp.task('collections', ['collections:collections', 'collections:tags']);
 }

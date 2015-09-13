@@ -2,12 +2,12 @@
 template: raw
 timestamp: 1441718580963
 title: <%= ItemName %>
-#header: <a href="/<%= collectionName %>/"><%= CollectionName %></a>/<%= ItemName %>
-breadcrumbs: <%= collectionName %>/<%= itemName %>
+#header: <a href="/<%= collectionType %>/"><%= CollectionType %></a>/<%= ItemName %>
+breadcrumbs: <%= collectionType %>/<%= itemName %>
 ---
 <!--<div class="z-depth-1 padding">-->
 <div class="collection">
-    {@loop:global.<%= collectionName %>[<%= itemIndex %>].files}
+    {@loop:global.<%= collectionType %>[<%= itemIndex %>].files}
         <a class="collection-item" href="/{value.href}">
             <span class="collection-post-text">{value.meta.title}</span>
             <span class="font-size-85 grey-text">@<span class="timestamp-to-date">{value.meta.timestamp}</span></span>

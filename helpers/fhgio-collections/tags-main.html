@@ -1,13 +1,13 @@
 ---
 template: raw
 timestamp: 1441718580963
-title: <%= CollectionName %>
+title: <%= CollectionType %>
 ---
 <!--<div class="z-depth-1 padding">-->
 <div>
-    {@loop:global.<%= collectionName %>}
+    {@loop:global.<%= collectionType %>}
     <div class="chip z-index-1">
-        <a class="collection-item" href="/<%= collectionName %>/{value.name}">{value.name} ({value.files.length})</a>
+        <a class="collection-item" href="/<%= collectionType %>/{value.name}">{value.name} ({value.files.length})</a>
     </div>
     {/loop}
 </div>
