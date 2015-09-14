@@ -20,6 +20,6 @@ export default function (gulp, $, config) {
     gulp.task('build', ['content', 'scripts:local', 'styles:local', 'collections', 'copy']);
 
     gulp.task('watch', ['dist'], () => {
-        gulp.watch([globs.src.all, globs.helpers], 'build');
+        gulp.watch([globs.src.all, globs.helpers], ['build']);
     });
 }

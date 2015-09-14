@@ -5,7 +5,10 @@ let $path = require('path');
 export default (gulp, $, config) => {
     let debug = (false) ? console.log : () => (void 0);
     let globalMetadata = config.globalMetadata;
-    return () => (throughPipes((readable) => {
+    return () => {
+        globalMetadata.tags = [];
+        globalMetadata.collections = [];
+        return throughPipes((readable) => {
             _.forIn(config.collectionsMap, (v, k) => {
                 globalMetadata.collections[k] = [];
             });
@@ -61,9 +64,21 @@ export default (gulp, $, config) => {
                     //console.log(file.path, 'metadata collection complete')
                 }))
                 .on('end', () => {
-                    console.log(globalMetadata);
+                    let posts = config.globalMetadata.getCollectionByName('posts');
+                    let projects = config.globalMetadata.getCollectionByName('projects');
+                    let files = _.flatten([posts.files, projects.files]);
+                    //console.log(files.map(file => file.meta))
+                    files = files.sort((item1, item2) => item1.meta.timestamp < item2.meta.timestamp ? 1 : -1)
+
+                    globalMetadata.indexCollection = {
+                        name: 'index'
+                        , files: files
+                    };
+
+                    globalMetadata.indexCollection2 = globalMetadata.getCollectionByName("projects");
+
                     debug('----- end read-global-metadata -----');
                 })
-        }
-    ));
+        })
+    };
 }
