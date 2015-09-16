@@ -1,0 +1,10 @@
+{
+  "index": {
+    "glob": ["posts", "notes"]
+  }
+  , "posts": ["posts"]
+  , "notes": ["notes"]
+  , "tags": {
+    "type": "tags"
+  }
+}

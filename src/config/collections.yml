@@ -1,0 +1,9 @@
+---
+index:
+  globs:
+    - "posts"
+    - "notes"
+posts:
+  - "posts"
+notes:
+  - "notes"

@@ -6,7 +6,7 @@ let fsReadFuleAsync = Promise.promisify(require('fs').readFile);
 
 export default (gulp, $, config) => {
     let globalMetadata = config.globalMetadata;
-    let debug = (false) ? console.log : () => (void 0);
+    let debug = (true) ? console.log : () => (void 0);
 
     return function fghioCollections(options) {
         let collectionType = options.name;
@@ -34,7 +34,7 @@ export default (gulp, $, config) => {
                     let itemIndex = index;
                     let itemName = item.name;
                     let itemValue = item.files;
-                    debug('Item with index:(', itemIndex, ') and name(', itemName, ') and value(', itemValue)
+                    debug('Item with index:(', itemIndex, ') and name(', itemName, ') and value(, itemValue')
                     return $.file(`${directory}${itemName}/index.tl`, subTemplate({
                         collectionType: collectionType
                         , CollectionType: _.startCase(collectionType)

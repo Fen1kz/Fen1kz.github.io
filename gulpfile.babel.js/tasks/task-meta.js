@@ -58,6 +58,6 @@ export default (gulp, $, config) => {
                 .pipe($.markdown(config.pluginOptions.markdown))
             , gulp.src(globs.src.content.root, {base: './root'})
                 .pipe($.readMetadata()))
-            .pipe($.readGlobalMetadata($));
+            .pipe($.readGlobalMetadata());
     });
 }

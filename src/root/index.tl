@@ -6,7 +6,7 @@ title: root
 ---
 <div class="col s12">
     <h2>Latest posts:</h2>
-    {@loop:global.indexCollection.files value="file"}
+    {@loop:global.index.files value="file"}
         <div class="z-depth-1 padding">
             <h3><a href="/{file.href}">{file.meta.title}</a> <span class="font-size-50 grey-text">@<span
                     class="timestamp-to-date">{file.meta.timestamp}</span></span></h3>
