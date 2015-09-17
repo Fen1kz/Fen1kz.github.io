@@ -16,7 +16,10 @@ export default (gulp, $, config) => {
 
     return () => throughPipes((readable) => {
         debug('----- read-global-metadata -----');
-        globalMetadata.collections.forEach((c) => c.clear());
+
+        _.forIn(globalMetadata.collections, (collection) => collection.clear());
+        globalMetadata.tags.forEach((collection) => collection.clear());
+
         return readable
             .pipe($.tap((file, t) => {
                 _.forIn(globalMetadata.collections, (collection) => collection.parse(file));

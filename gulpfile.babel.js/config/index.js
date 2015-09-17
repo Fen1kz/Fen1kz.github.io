@@ -18,8 +18,7 @@ let config = {
     }
     , globalMetadata: {
         tags: []
-        , collections: []
-        , getCollectionByName: (name) => _.find(config.globalMetadata.collections, 'name', name)
+        , collections: {}
     }
 };
 

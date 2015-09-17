@@ -9,7 +9,8 @@ class Collection {
         this.name = name;
         if (_.isArray(config)) config = {globs: config};
         this.config = _.defaults({}, config, {
-            globs: []
+            visible: true
+            , globs: []
         });
         this.files = [];
 

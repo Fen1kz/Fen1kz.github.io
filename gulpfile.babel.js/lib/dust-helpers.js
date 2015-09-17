@@ -8,8 +8,15 @@ export default {
         let valueName = dust.helpers.tap(params.value, chunk, ctx) || 'value';
 
         _.forIn(ctx.current(), (value, key) => {
-            chunk = chunk.render(bodies.block, ctx.push({[keyName]: key, [valueName]: value}));
+            chunk.render(bodies.block, ctx.push({[keyName]: key, [valueName]: value}));
         });
+        return chunk;
+    }
+    , if: (chunk, ctx, bodies, params) => {
+        let condition = ctx.resolve(params.cond);
+        if (!!condition) {
+            chunk.render(bodies.block, ctx);
+        }
         return chunk;
     }
     , startCase: (chunk, ctx, bodies, params) => {

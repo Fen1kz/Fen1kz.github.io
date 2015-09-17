@@ -9,7 +9,7 @@ export default function (gulp, $, config, helpers) {
 
     gulp.task('copy:projects', () => {
         return gulp.src(globs.src.projects)
-            .pipe(gulp.dest(`${dirs.dist}/p`))
+            .pipe(gulp.dest(`${dirs.dist}`))
     });
 
     gulp.task('copy', ['copy:root', 'copy:projects']);

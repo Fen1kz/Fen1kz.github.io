@@ -1,9 +1,12 @@
 ---
 index:
+  visible: false
   globs:
-    - "posts"
-    - "notes"
+    - posts
+    - projects
 posts:
-  - "posts"
-notes:
-  - "notes"
+  - posts
+projects:
+  - projects
+private:
+  - private
