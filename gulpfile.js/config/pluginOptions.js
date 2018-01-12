@@ -6,7 +6,7 @@
 'use strict';
 
 let Prism = require('prismjs');
-let gutil = require('gulp-util');
+let log = require('fancy-log');
 
 let logger = {
     warn: (plugin, msg) => gutil.log(gutil.colors.yellow(plugin), msg)

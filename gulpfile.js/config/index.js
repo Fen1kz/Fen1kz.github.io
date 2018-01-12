@@ -1,13 +1,4 @@
-/*
- * Project configuration module index.
- * ============================================================================
- */
-
-'use strict';
-
-let _ = require('lodash');
-
-let config = {
+module.exports = {
     dirs: require('./dirs')
     , globs: require('./globs')
     , pluginOptions: require('./pluginOptions')
@@ -21,5 +12,3 @@ let config = {
         , collections: {}
     }
 };
-
-module.exports = config;
